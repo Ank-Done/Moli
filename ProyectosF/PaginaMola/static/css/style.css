@@ -1,0 +1,186 @@
+/* --- Variables y Estilos Globales --- */
+:root {
+    --primary-color: #0d6efd; /* Azul Vibrante */
+    --secondary-color: #fd7e14; /* Naranja Intenso */
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --text-color: #555;
+    --white-color: #ffffff;
+    --font-family: 'Poppins', sans-serif;
+    --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.7;
+    color: var(--text-color);
+    margin: 0;
+    padding-top: 90px;
+    background-color: var(--white-color);
+    overflow-x: hidden; /* Previene scroll horizontal por animaciones */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-top: 0;
+}
+
+/* --- Animaciones --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-on-load {
+    animation-duration: 0.8s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+}
+
+.animate-fade-in-up {
+    animation-name: fadeInUp;
+}
+
+
+/* --- Barra de Navegación --- */
+.main-header {
+    background-color: var(--white-color);
+    box-shadow: var(--box-shadow);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all var(--transition-speed) ease;
+}
+
+.navbar { height: 90px; }
+.navbar .container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+
+.navbar-logo img {
+    height: 70px; /* Tamaño del logo aumentado */
+    width: auto;
+    transition: transform var(--transition-speed) ease;
+}
+.navbar-logo:hover img {
+    transform: scale(1.05);
+}
+
+.navbar-menu { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 30px; }
+.navbar-menu a { color: var(--text-color); font-weight: 600; padding: 5px 0; border-bottom: 3px solid transparent; transition: all var(--transition-speed) ease; }
+.navbar-menu a:not(.btn):hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+/* --- Botones --- */
+.btn { display: inline-block; padding: 12px 30px; border-radius: 50px; font-weight: 600; text-align: center; transition: all var(--transition-speed) ease; border: 2px solid transparent; cursor: pointer; }
+.btn-primary { background-color: #ffffff; color: var(--white-color); border-color: var(--primary-color); }
+.btn-primary:hover { background-color: #ffffff; border-color: #bdbdbd; transform: translateY(-3px); }
+.btn-secondary { background-color: var(--secondary-color); color: var(--white-color); border-color: var(--secondary-color); }
+.btn-secondary:hover { background-color: #e67312; border-color: #e67312; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(253, 126, 20, 0.4); }
+
+/* --- Sección Hero --- */
+.hero-section { position: relative; height: 80vh; display: flex; align-items: center; text-align: center; color: var(--white-color); background-attachment: fixed; /* Efecto Parallax */ background-position: center; background-repeat: no-repeat; background-size: cover; }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.4)); }
+.hero-content { position: relative; z-index: 2; max-width: 800px; }
+.hero-content h1 { font-size: 4rem; color: var(--white-color); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+.hero-content p { font-size: 1.3rem; font-weight: 300; margin-bottom: 2rem; }
+.hero-content .btn-secondary { animation: pulse 2s infinite; }
+
+/* --- Secciones y Títulos --- */
+.page-section { padding: 100px 0; }
+.bg-light { background-color: var(--light-color); }
+.section-title { text-align: center; margin-bottom: 60px; }
+.section-title h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+.section-title p { font-size: 1.2rem; color: #777; }
+.page-header { background: linear-gradient(45deg, var(--primary-color), #0d95fd); color: var(--white-color); padding: 80px 0; text-align: center; }
+.page-header h1 { font-size: 3.5rem; color: var(--white-color); }
+.page-header p { font-size: 1.3rem; opacity: 0.9; }
+
+/* --- Tarjetas (Cards) --- */
+.card { background: var(--white-color); border-radius: var(--border-radius); box-shadow: var(--box-shadow); padding: 35px; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; border: 1px solid #eee; }
+.card:hover { transform: translateY(-12px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); }
+.card h3 { color: var(--primary-color); }
+
+/* --- Grid Layout --- */
+.grid-layout { display: grid; gap: 30px; }
+.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* --- Filtro de Productos --- */
+#product-filter-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
+.filter-btn { background: var(--light-color); color: var(--text-color); border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; transition: all var(--transition-speed) ease; }
+.filter-btn:hover { background-color: #e2e6ea; }
+.filter-btn.active { background-color: var(--secondary-color); color: var(--white-color); box-shadow: 0 4px 15px rgba(253, 126, 20, 0.3); }
+
+/* --- Tarjetas de Producto --- */
+.product-card { display: flex; flex-direction: column; text-align: center; }
+.product-image { width: 100%; height: 200px; margin-bottom: 1.5rem; }
+.product-image img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--border-radius); }
+
+/* --- Contadores Animados --- */
+.stats-counter { margin-top: 60px; text-align: center; }
+.stat-item { background: var(--light-color); padding: 30px 20px; border-radius: var(--border-radius); }
+.stat-number { font-size: 3.5rem; font-weight: 700; color: var(--primary-color); display: block; }
+.stat-item p { margin: 0; font-weight: 600; color: #555; }
+
+/* --- Página de Contacto --- */
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; align-items: flex-start; }
+.contact-info h3, .contact-form h3 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+.contact-info ul { list-style: none; padding: 0; }
+.contact-info li { margin-bottom: 1rem; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+.form-group input, .form-group textarea { width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: var(--border-radius); font-size: 1rem; transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25); }
+
+/* --- Pie de Página --- */
+.main-footer { background-color: var(--dark-color); color: var(--white-color); padding: 30px 0; text-align: center; margin-top: 50px; }
+
+/* --- Responsividad --- */
+@media (max-width: 992px) {
+    .cols-3, .cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .contact-wrapper { grid-template-columns: 1fr; }
+    .hero-content h1 { font-size: 3rem; }
+}
+
+@media (max-width: 768px) {
+    body { padding-top: 70px; }
+    .navbar { height: 70px; }
+    .navbar-logo img { height: 50px; }
+    .navbar-menu { display: none; } /* Ocultar menú para implementar hamburguesa en el futuro */
+    .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+    .page-section { padding: 60px 0; }
+    #product-filter-bar { flex-wrap: wrap; }
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard Corporativo | Tu Empresa de Vanguardia</title>
+
+    <meta name="description" content="Plataforma de gestión de datos y métricas empresariales de alta eficiencia.">
+    <meta name="theme-color" content="#1A202C"/> <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="icon" href="assets/icon-192x192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    </head>
+<body>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="assets/logo.svg" alt="Moliendas Y Alimentos Base de datos" class="app-logo">
+                <span class="app-name"></span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><button id="dashboard-btn" class="nav-item active" aria-label="Ver Dashboard"><span class="icon-dashboard"></span> Dashboard</button></li>
+                    <li><button id="data-btn" class="nav-item" aria-label="Gestionar Datos"><span class="icon-database"></span> Gestión de Datos</button></li>
+                    <li><button id="reports-btn" class="nav-item" aria-label="Ver Reportes"><span class="icon-chart"></span> Reportes</button></li>
+                    <li><button id="settings-btn" class="nav-item" aria-label="Configuración"><span class="icon-settings"></span> Configuración</button></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <div class="user-avatar"></div>
+                <span class="user-name">Administrador</span>
+                <span class="user-status">Online</span>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <header class="top-header">
+                <h1 id="page-title"></h1>
+                <div class="header-actions">
+                    <button class="action-button primary-button"><span class="icon-add"></span> Nuevo Registro</button>
+                    <button class="action-button secondary-button"><span class="icon-download"></span> Exportar</button>
+                </div>
+            </header>
+
+            <section id="dashboard-view" class="view active">
+                <div class="overview-grid">
+                    <div class="metric-card">
+                        <span class="card-icon icon-users"></span>
+                        <h3 class="card-title">Clientes Activos</h3>
+                        <p class="card-value" id="active-clients">...</p>
+                    </div>
+                    <div class="metric-card">
+                        <span class="card-icon icon-projects"></span>
+                        <h3 class="card-title">Proyectos en Curso</h3>
+                        <p class="card-value" id="current-projects">...</p>
+                    </div>
+                    <div class="metric-card">
+                        <span class="card-icon icon-revenue"></span>
+                        <h3 class="card-title">Ingresos Mensuales</h3>
+                        <p class="card-value" id="monthly-revenue">...</p>
+                    </div>
+                    <div class="metric-card">
+                        <span class="card-icon icon-tasks"></span>
+                        <h3 class="card-title">Tareas Pendientes</h3>
+                        <p class="card-value" id="pending-tasks">...</p>
+                    </div>
+                </div>
+                <div class="chart-area">
+                    <div class="chart-card">
+                        <h3>Rendimiento Trimestral</h3>
+                        <canvas id="quarterly-performance-chart"></canvas> </div>
+                    <div class="recent-activity-card">
+                        <h3>Actividad Reciente</h3>
+                        <ul id="recent-activity-list">
+                            <li><span class="activity-icon icon-check"></span> Nuevo cliente 'Global Corp' añadido. <span class="activity-time">hace 5 min</span></li>
+                            <li><span class="activity-icon icon-alert"></span> Alerta de bajo stock en 'Producto X'. <span class="activity-time">hace 1 hora</span></li>
+                            <li><span class="activity-icon icon-upload"></span> Informe de ventas de Q1 subido. <span class="activity-time">ayer</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="data-view" class="view">
+                <div class="data-controls">
+                    <input type="search" id="data-search" placeholder="Buscar datos..." class="search-input">
+                    <button class="action-button primary-button"><span class="icon-add"></span> Añadir Ítem</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="items-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del Ítem</th>
+                                <th>Categoría</th>
+                                <th>Estado</th>
+                                <th>Última Actualización</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>101</td>
+                                <td>Análisis de Mercado Q2</td>
+                                <td>Reportes</td>
+                                <td><span class="status-badge status-completed">Completado</span></td>
+                                <td>2025-06-01</td>
+                                <td>
+                                    <button class="icon-button" aria-label="Ver Detalles"><span class="icon-eye"></span></button>
+                                    <button class="icon-button" aria-label="Editar"><span class="icon-edit"></span></button>
+                                    <button class="icon-button" aria-label="Eliminar"><span class="icon-delete"></span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Base de Datos Clientes Norte</td>
+                                <td>Datos</td>
+                                <td><span class="status-badge status-pending">Pendiente</span></td>
+                                <td>2025-05-28</td>
+                                <td>
+                                    <button class="icon-button"><span class="icon-eye"></span></button>
+                                    <button class="icon-button"><span class="icon-edit"></span></button>
+                                    <button class="icon-button"><span class="icon-delete"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-controls">
+                    <button class="pagination-button disabled">&laquo; Anterior</button>
+                    <span>Página 1 de 10</span>
+                    <button class="pagination-button">Siguiente &raquo;</button>
+                </div>
+                <p id="loading-message" class="info-message hidden">Cargando datos...</p>
+                <p id="error-message" class="error-message hidden">Error al cargar datos. Intente nuevamente.</p>
+            </section>
+
+            <section id="reports-view" class="view">
+                <h2 class="section-title">Generación de Reportes</h2>
+                <p class="section-description">Cree y descargue informes personalizados de su información empresarial.</p>
+                <div class="report-options-grid">
+                    <div class="report-card">
+                        <span class="card-icon icon-pdf"></span>
+                        <h3>Reporte de Ventas</h3>
+                        <p>Genera un informe detallado de las ventas por periodo.</p>
+                        <button class="action-button primary-button"><span class="icon-download"></span> Generar PDF</button>
+                    </div>
+                    <div class="report-card">
+                        <span class="card-icon icon-excel"></span>
+                        <h3>Reporte de Inventario</h3>
+                        <p>Descarga un archivo Excel con el estado actual del inventario.</p>
+                        <button class="action-button primary-button"><span class="icon-download"></span> Generar Excel</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings-view" class="view">
+                <h2 class="section-title">Configuración de la Aplicación</h2>
+                <p class="section-description">Ajuste las preferencias y seguridad de su plataforma.</p>
+                <form id="settings-form" class="settings-form">
+                    <div class="form-group">
+                        <label for="app-name-input">Nombre de la Aplicación</label>
+                        <input type="text" id="app-name-input" name="app_name" value="Tu Empresa Dashboard">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-notifications">Notificaciones por Correo</label>
+                        <label class="switch">
+                            <input type="checkbox" id="email-notifications" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="api-key-input">Clave API (Solo lectura)</label>
+                        <input type="text" id="api-key-input" name="api_key" value="**********" readonly>
+                        <button type="button" class="copy-button"><span class="icon-copy"></span> Copiar</button>
+                    </div>
+                    <button type="submit" class="action-button primary-button large-button">Guardar Cambios</button>
+                </form>
+            </section>
+
+            <div id="global-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h3 id="modal-title"></h3>
+                    <div id="modal-body"></div>
+                    <div class="modal-actions">
+                        <button class="action-button secondary-button" id="modal-cancel-btn">Cancelar</button>
+                        <button class="action-button primary-button" id="modal-confirm-btn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notification-bar" class="notification-bar hidden">
+                <span id="notification-message"></span>
+                <button class="close-notification">&times;</button>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Registro del Service Worker para PWA (para caché y funcionalidad offline)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(error => {
+                        console.error('Fallo el registro del Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

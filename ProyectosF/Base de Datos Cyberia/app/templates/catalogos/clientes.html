@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4 animate-slide-in-down">
+    <div class="col">
+        <h1 class="display-5 fw-bold">
+            <i class="fas fa-users me-2"></i>Clientes
+        </h1>
+        <p class="lead">Gestión de clientes registrados en el sistema</p>
+    </div>
+    <div class="col-auto">
+        <a href="/catalogos/nuevo-representante?tipo=cliente" class="btn btn-success btn-lg">
+            <i class="fas fa-plus me-2"></i>Nuevo Cliente
+        </a>
+    </div>
+</div>
+
+<div class="card animate-fade-in delay-1">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Lista de Clientes</h5>
+        <div class="d-flex">
+            <input type="text" class="form-control me-2" placeholder="Buscar cliente...">
+            <button class="btn btn-sm btn-outline-light">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>RFC</th>
+                        <th>Límite Crédito</th>
+                        <th>Días Crédito</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr class="animated-element">
+                        <td>{{ cliente.representante.codigo }}</td>
+                        <td>{{ cliente.representante.nombre }}</td>
+                        <td>{{ cliente.representante.rfc or 'N/A' }}</td>
+                        <td>${{ cliente.limite_credito or '0.00' | format_currency }}</td>
+                        <td>{{ cliente.dias_credito or '0' }} días</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-primary animated-icon">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-info animated-icon">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger animated-icon">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">No se encontraron clientes</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Anterior</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card stats-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="stats-label">TOTAL CLIENTES</h6>
+                        <h3 class="stats-value">{{ clientes | length }}</h3>
+                    </div>
+                    <div class="icon-bg">
+                        <i class="fas fa-users fa-3x text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stats-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="stats-label">CRÉDITO PROMEDIO</h6>
+                        <h3 class="stats-value">$12,450.00</h3>
+                    </div>
+                    <div class="icon-bg">
+                        <i class="fas fa-credit-card fa-3x text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stats-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="stats-label">CLIENTES NUEVOS</h6>
+                        <h3 class="stats-value">3</h3>
+                    </div>
+                    <div class="icon-bg">
+                        <i class="fas fa-user-plus fa-3x text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animación para elementos que aparecen al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.animated-element').forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
+{% endblock %}

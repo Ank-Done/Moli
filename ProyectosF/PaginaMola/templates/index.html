@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Inicio – Moliendas & Alimentos{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="background-image: url('{{ url_for('static', filename='images/hero-background.jpg') }}');">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <h1 class="animate-on-load animate-fade-in-up">Innovación y Calidad en Endulzantes</h1>
+        <p class="animate-on-load animate-fade-in-up" style="animation-delay: 0.2s;">Soluciones a la medida para la industria alimentaria.</p>
+        <a href="{{ url_for('productos') }}" class="btn btn-secondary animate-on-load animate-fade-in-up" style="animation-delay: 0.4s;">Ver Productos</a>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="section-title animate-on-scroll">
+            <h2>Líderes en el Mercado de Molienda y Mezcla</h2>
+        </div>
+        <div class="about-us-content animate-on-scroll">
+            <p>Con más de 20 años de experiencia, en <strong>Moliendas & Alimentos</strong> nos especializamos en el desarrollo, molienda, mezcla y envasado de ingredientes en polvo. Nuestro compromiso es ofrecer productos de la más alta calidad y un servicio que exceda las expectativas.</p>
+        </div>
+
+        <div class="stats-counter grid-layout cols-3 animate-on-scroll">
+            <div class="stat-item">
+                <span class="stat-number" data-target="20">0</span>
+                <p>Años de Experiencia</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="500">0</span>+
+                <p>Clientes Satisfechos</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="100">0</span>+
+                <p>Productos Desarrollados</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-section bg-light">
+    <div class="container">
+        <div class="section-title animate-on-scroll">
+            <h2>Nuestros Servicios Destacados</h2>
+        </div>
+        <div class="grid-layout cols-3">
+            <div class="card animate-on-scroll">
+                <h3>Desarrollo de Productos</h3>
+                <p>Creamos formulaciones únicas y personalizadas.</p>
+            </div>
+            <div class="card animate-on-scroll" style="animation-delay: 0.1s;">
+                <h3>Moliendas y Mezclas</h3>
+                <p>Tecnología de punta para garantizar la homogeneidad perfecta.</p>
+            </div>
+            <div class="card animate-on-scroll" style="animation-delay: 0.2s;">
+                <h3>Envasado y Maquila</h3>
+                <p>Servicio flexible y eficiente con los más altos estándares.</p>
+            </div>
+        </div>
+         <div class="text-center animate-on-scroll" style="margin-top: 3rem;">
+            <a href="{{ url_for('servicios') }}" class="btn btn-primary">Ver Todos los Servicios</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
