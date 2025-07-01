@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Inicio – Moliendas & Alimentos{% endblock %}
+
+{% block content %}
+.
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <h1>Innovación y Calidad en Endulzantes y Polvos</h1>
+        <p>Soluciones a la medida para la industria alimentaria. Llevamos tus productos al siguiente nivel.</p>
+        <a href="{{ url_for('productos') }}" class="btn btn-secondary">Ver Nuestros Productos</a>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Quiénes Somos</h2>
+            <p>Líderes en el mercado de la molienda y mezcla</p>
+        </div>
+        <div class="about-us-content">
+            <p>Con más de 20 años de experiencia, en <strong>Moliendas & Alimentos</strong> nos especializamos en el desarrollo, molienda, mezcla y envasado de ingredientes en polvo para la industria alimentaria. Nuestro compromiso es ofrecer productos de la más alta calidad y un servicio que exceda las expectativas de nuestros clientes.</p>
+        </div>
+    </div>
+</section>
+
+<section class="page-section bg-light">
+    <div class="container">
+        <div class="section-title">
+            <h2>Nuestros Servicios Destacados</h2>
+        </div>
+        <div class="grid-layout cols-3">
+            <div class="card">
+                <h3>Desarrollo de Productos</h3>
+                <p>Creamos formulaciones únicas y personalizadas que se adaptan a las necesidades de tu mercado.</p>
+            </div>
+            <div class="card">
+                <h3>Moliendas y Mezclas</h3>
+                <p>Contamos con tecnología de punta para garantizar la granulometría y homogeneidad perfectas en cada lote.</p>
+            </div>
+            <div class="card">
+                <h3>Envasado y Maquila</h3>
+                <p>Ofrecemos un servicio de maquila flexible y eficiente para envasar tus productos con los más altos estándares.</p>
+            </div>
+        </div>
+         <div class="text-center" style="margin-top: 2rem;">
+            <a href="{{ url_for('servicios') }}" class="btn btn-primary">Conocer todos los servicios</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

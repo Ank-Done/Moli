@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montacargas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* ... (estilos anteriores se mantienen) ... */
+        
+        .tiempo-restante {
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-height: 1.5em; /* Evita cambios de layout */
+        }
+        
+        .cargando {
+            color: #0d6efd;
+            animation: parpadeo 1s infinite;
+        }
+        
+        @keyframes parpadeo {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Monitoreo de Montacargas</h2>
+        <div class="row mb-4">
+            <div class="col-md-4 text-center">
+                <span class="badge bg-success status-badge">Hangcha 35</span>
+            </div>
+            <div class="col-md-4 text-center">
+                <span class="badge bg-warning status-badge">G2 Series 25</span>
+            </div>
+            <div class="col-md-4 text-center">
+                <span class="badge bg-warning text-dark status-badge">KB Power</span>
+            </div>
+        </div>
+
+        <div id="contenedor" class="row">
+            <!-- Tarjetas dinámicas -->
+        </div>
+    </div>
+
+    <script>
+        // Variables de estado
+        const estadoMontacargas = {};
+        let ultimaActualizacion = 0;
+        const INTERVALO_DATOS = 2000; // 2 segundos
+        const INTERVALO_RELOJES = 1000; // 1 segundo
+        
+        // Estado de los relojes locales
+        const relojesLocales = {};
+
+        async function fetchData() {
+            try {
+                const inicio = Date.now();
+                const res = await fetch("/api/montacargas?_=" + Date.now());
+                
+                if (!res.ok) {
+                    throw new Error(`Error ${res.status}`);
+                }
+                
+                const data = await res.json();
+                const contenedor = document.getElementById("contenedor");
+                
+                // Actualizar estado local
+                data.forEach(m => {
+                    estadoMontacargas[m.id] = m;
+                    
+                    // Actualizar reloj local si es necesario
+                    if (m.en_carga && m.estimado_fin > 0) {
+                        relojesLocales[m.id] = m.estimado_fin;
+                    } else if (relojesLocales[m.id]) {
+                        delete relojesLocales[m.id];
+                    }
+                });
+                
+                renderizarMontacargas(data);
+                
+                const duracion = Date.now() - inicio;
+                if (duracion > 500) {
+                    console.log(`Solicitud completada en ${duracion}ms`);
+                }
+            } catch (error) {
+                console.error("Error al obtener datos:", error);
+            }
+        }
+
+        function renderizarMontacargas(data) {
+            const contenedor = document.getElementById("contenedor");
+            let htmlCompleto = "";
+            
+            data.forEach(m => {
+                // Determinar clase CSS según tipo
+                let tipoClase = "";
+                let tipoNombre = "";
+                if (m.tipo === "Hangcha35") {
+                    tipoClase = "hangcha35";
+                    tipoNombre = "Hangcha 35";
+                } else if (m.tipo === "G2Series25") {
+                    tipoClase = "g2series25";
+                    tipoNombre = "G2 Series 25";
+                } else if (m.tipo === "KBPower") {
+                    tipoClase = "kbpower";
+                    tipoNombre = "KB Power";
+                }
+                
+                // Texto para porcentaje de batería
+                const porcentajeTexto = m.porcentaje === null ? 
+                    "Desconocido" : 
+                    `${m.porcentaje}%`;
+                
+                // Clase para nivel de batería
+                const nivelBateria = m.porcentaje === null ? 0 : m.porcentaje;
+                let claseBateria = "";
+                if (nivelBateria < 20) claseBateria = "text-danger";
+                else if (nivelBateria < 40) claseBateria = "text-warning";
+                else if (nivelBateria >= 80) claseBateria = "text-success";
+                
+                // Estado actual
+                let estadoTexto = "";
+                let estadoClase = "";
+                if (m.en_uso) {
+                    estadoTexto = "En uso";
+                    estadoClase = "text-success";
+                } else if (m.en_carga) {
+                    estadoTexto = "Cargando";
+                    estadoClase = "text-warning";
+                } else {
+                    estadoTexto = "Inactivo";
+                    estadoClase = "text-secondary";
+                }
+                
+                // Generar HTML
+                const html = `
+                    <div class="col-md-6 mb-3">
+                        <div class="card p-3 ${tipoClase} h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title m-0">
+                                    Montacarga #${m.id}
+                                </h5>
+                                <span class="badge bg-secondary badge-tipo">${tipoNombre}</span>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <div class="d-flex justify-content-between">
+                                    <span class="estado-bateria ${claseBateria}">${porcentajeTexto}</span>
+                                    <span class="${estadoClase}">${estadoTexto}</span>
+                                </div>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar ${claseBateria.replace('text-', 'bg-')}" 
+                                         role="progressbar" 
+                                         style="width: ${nivelBateria}%">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <strong>Tiempo restante:</strong> 
+                                <span id="tiempo-${m.id}" class="tiempo-restante">${m.tiempo_restante}</span>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <strong>Alerta:</strong> 
+                                ${m.notificar ? 
+                                    '<span class="alerta">¡Desconectar!</span>' : 
+                                    'Sin alerta'}
+                            </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <form onsubmit="toggleEstado(event, ${m.id}, 'EnUso', ${m.en_uso})">
+                                        <button class="btn ${m.en_uso ? 'btn-success' : 'btn-outline-success'} boton-toggle">
+                                            ${m.en_uso ? 'En uso' : 'No en uso'}
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-6">
+                                    <form onsubmit="toggleEstado(event, ${m.id}, 'EnCarga', ${m.en_carga})">
+                                        <button class="btn ${m.en_carga ? 'btn-warning' : 'btn-outline-warning'} boton-toggle">
+                                            ${m.en_carga ? 'Cargando' : 'No cargando'}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                htmlCompleto += html;
+            });
+            
+            contenedor.innerHTML = htmlCompleto;
+        }
+
+        async function toggleEstado(event, id, campo, estadoActual) {
+            event.preventDefault();
+            
+            let formData = new URLSearchParams();
+            formData.append("id", id);
+            formData.append("campo", campo);
+            
+            // Solicitar nuevo porcentaje si se está dejando de usar
+            if (campo === "EnUso" && estadoActual) {
+                const nuevo = prompt("Ingresa el nuevo porcentaje de batería:");
+                if (nuevo === null) return;
+                
+                const porcentaje = parseInt(nuevo);
+                if (isNaN(porcentaje)) {
+                    alert("Debe ingresar un número válido");
+                    return;
+                }
+                
+                if (porcentaje < 0 || porcentaje > 100) {
+                    alert("El porcentaje debe estar entre 0 y 100");
+                    return;
+                }
+                
+                formData.append("nuevo_porcentaje", porcentaje);
+            }
+            
+            try {
+                // Feedback visual inmediato
+                const boton = event.target.querySelector('button');
+                if (boton) {
+                    const originalText = boton.textContent;
+                    boton.textContent = 'Actualizando...';
+                    boton.disabled = true;
+                    
+                    // Agregar animación de carga
+                    const tiempoSpan = document.getElementById(`tiempo-${id}`);
+                    if (tiempoSpan) {
+                        tiempoSpan.textContent = "Cargando...";
+                        tiempoSpan.classList.add("cargando");
+                    }
+                }
+                
+                // Enviar solicitud
+                const inicio = Date.now();
+                const res = await fetch("/api/toggle", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: formData
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    
+                    // Actualizar reloj local si se activó carga
+                    if (campo === "EnCarga" && data.estimado_fin > 0) {
+                        relojesLocales[id] = data.estimado_fin;
+                    }
+                    
+                    // Forzar actualización inmediata
+                    await fetchData();
+                } else {
+                    const error = await res.json();
+                    alert(error.error || "Error al cambiar estado");
+                }
+            } catch (error) {
+                console.error("Error en toggle:", error);
+                alert("Error de red. Intente nuevamente.");
+            } finally {
+                // Restaurar botón
+                if (boton) {
+                    boton.textContent = estadoActual ? 
+                        (campo === "EnUso" ? "En uso" : "Cargando") : 
+                        (campo === "EnUso" ? "No en uso" : "No cargando");
+                    boton.disabled = false;
+                    
+                    // Remover animación de carga
+                    const tiempoSpan = document.getElementById(`tiempo-${id}`);
+                    if (tiempoSpan) {
+                        tiempoSpan.classList.remove("cargando");
+                    }
+                }
+            }
+        }
+
+        function actualizarRelojes() {
+            const ahora = Math.floor(Date.now() / 1000);
+            
+            // Actualizar relojes locales
+            for (const [id, fin] of Object.entries(relojesLocales)) {
+                const restante = Math.max(0, fin - ahora);
+                
+                if (restante > 0) {
+                    const h = Math.floor(restante / 3600);
+                    const m = Math.floor((restante % 3600) / 60);
+                    const s = Math.floor(restante % 60);
+                    const texto = `${h}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+                    
+                    const span = document.getElementById(`tiempo-${id}`);
+                    if (span) span.textContent = texto;
+                } else {
+                    const span = document.getElementById(`tiempo-${id}`);
+                    if (span) span.textContent = "Completo";
+                    
+                    // Remover del estado local
+                    delete relojesLocales[id];
+                }
+            }
+            
+            // Actualizar relojes del estado global (como respaldo)
+            for (const m of Object.values(estadoMontacargas)) {
+                if (m.en_carga && !m.en_uso && m.estimado_fin > 0) {
+                    const restante = Math.max(0, m.estimado_fin - ahora);
+                    
+                    if (restante > 0) {
+                        const h = Math.floor(restante / 3600);
+                        const m = Math.floor((restante % 3600) / 60);
+                        const s = Math.floor(restante % 60);
+                        const texto = `${h}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+                        
+                        const span = document.getElementById(`tiempo-${m.id}`);
+                        if (span) span.textContent = texto;
+                    } else {
+                        const span = document.getElementById(`tiempo-${m.id}`);
+                        if (span) span.textContent = "Completo";
+                    }
+                }
+            }
+        }
+
+        // Iniciar la aplicación
+        setInterval(fetchData, INTERVALO_DATOS);
+        setInterval(actualizarRelojes, INTERVALO_RELOJES);
+        window.onload = () => {
+            fetchData();
+            actualizarRelojes();
+        };
+    </script>
+</body>
+</html>

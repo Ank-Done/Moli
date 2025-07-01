@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Productos – Moliendas & Alimentos{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Catálogo de Productos</h1>
+        <p>Calidad e innovación en cada grano</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="grid-layout cols-4">
+            {% for producto in productos %}
+            <div class="card product-card">
+                <div class="product-image">
+                    <img src="{{ url_for('static', filename='images/' + producto.imagen) }}" alt="{{ producto.nombre }}">
+                </div>
+                <div class="product-info">
+                    <h3>{{ producto.nombre }}</h3>
+                    <p>{{ producto.descripcion }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
