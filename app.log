@@ -1,0 +1,20 @@
+ * Serving Flask app 'fixed_app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5004
+ * Running on http://192.168.1.182:5004
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 118-109-130
+127.0.0.1 - - [04/Jul/2025 10:12:20] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:12:47] "GET /api/dashboard-enhanced HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:12:57] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:12:57] "GET /api/products HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:13:08] "GET /api/dashboard-enhanced HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:13:13] "GET /api/sales?month=Enero HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:13:56] "GET /api/sales?month=Mayo&product=ALIMENTO+BALANCEADO+PORCINOS HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:14:00] "GET /api/sales?month=Mayo&product=AZUCAR+GLASS+(PULVERIZADA) HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:14:27] "GET /api/dashboard-enhanced HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2025 10:14:31] "GET /api/products HTTP/1.1" 200 -
