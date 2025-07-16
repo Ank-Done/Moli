@@ -1,0 +1,168 @@
+INFO:__main__:✅ pyodbc disponible - usando SQL Server real
+127.0.0.1 - - [14/Jul/2025 14:47:50] "GET /health HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:47:55] "GET /api/graficas/datos-anuales HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:56:36] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 14:56:36] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:56:37] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 14:56:37] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /graficas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /api/graficas/datos-anuales HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:56:39] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:57:20] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 14:57:20] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:20] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:20] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:22] "GET /api/ventas/filtradas?a%C3%B1o=2024 HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:24] "GET /api/ventas/filtradas?a%C3%B1o=2023 HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:26] "GET /api/ventas/filtradas?a%C3%B1o=2022 HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:27] "GET /api/ventas/filtradas?a%C3%B1o=2021 HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:28] "GET /api/ventas/filtradas?concepto=FACT01&a%C3%B1o=2021 HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:29] "GET /api/ventas/filtradas?concepto=FACT01 HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:30] "GET /api/ventas/filtradas? HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:57:32] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 14:57:32] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:32] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 14:57:32] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:01:32] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:01:32] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:01:33] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:01:33] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:01:35] "GET /graficas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:01:35] "GET /api/graficas/datos-anuales HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:01:35] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:01:35] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:17:36] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:17:36] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:17:46] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:17:46] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:17:59] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:17:59] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:17:59] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:17:59] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:19:44] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:19:44] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:19:44] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:19:44] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:19:45] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:19:45] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /graficas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /api/graficas/datos-anuales HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:19:46] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:19] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:39:19] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:19] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:19] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:20] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:39:20] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:21] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:39:21] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:22] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:39:22] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:24] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:39:24] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:24] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a Cyberia
+127.0.0.1 - - [14/Jul/2025 15:39:24] "GET /api/ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:24] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:24] "GET /api/graficas/conceptos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 15:39:25] "GET /graficas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:25] "GET /api/graficas/datos-anuales HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDAGENTE'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:25] "GET /api/graficas/agentes HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+ERROR:__main__:❌ Error ejecutando consulta: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'CIDCONCEPTO'. (207) (SQLExecDirectW)")
+127.0.0.1 - - [14/Jul/2025 15:39:25] "GET /api/graficas/conceptos HTTP/1.1" 200 -
