@@ -1,0 +1,545 @@
+{% extends "base.html" %}
+
+{% block title %}Productos - Sistema Cyberia{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h1 class="h3 mb-0">Gestión de Productos</h1>
+        <p class="text-muted">Catálogo completo de productos de azúcar y servicios</p>
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openProductModal()">
+            <i class="fas fa-plus me-2"></i>Nuevo Producto
+        </button>
+    </div>
+</div>
+
+<!-- Search and Filters -->
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="search-box">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar productos...">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="industryFilter">
+                    <option value="">Todas las industrias</option>
+                    <option value="SUGAR_PROCESSING">Procesamiento de Azúcar</option>
+                    <option value="LOGISTICS">Logística</option>
+                    <option value="SUPPLIES">Suministros</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="categoryFilter">
+                    <option value="">Todas las categorías</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="priceRangeFilter">
+                    <option value="">Todos los precios</option>
+                    <option value="ECONOMICO">Económico</option>
+                    <option value="MEDIO">Medio</option>
+                    <option value="PREMIUM">Premium</option>
+                    <option value="ULTRA_PREMIUM">Ultra Premium</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-secondary w-100" onclick="applyFilters()">
+                    <i class="fas fa-filter me-2"></i>Filtrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Products Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-cube me-2"></i>Lista de Productos</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Industria</th>
+                        <th>Precio Actual</th>
+                        <th>Margen</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTable">
+                    <!-- Products will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <nav aria-label="Products pagination">
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Pagination will be generated here -->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Product Modal -->
+<div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalTitle">Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="productForm">
+                <div class="modal-body">
+                    <input type="hidden" id="productId">
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="productCode" class="form-label">Código del Producto *</label>
+                            <input type="text" class="form-control" id="productCode" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productName" class="form-label">Nombre del Producto *</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="industry" class="form-label">Industria *</label>
+                            <select class="form-select" id="industry" required>
+                                <option value="">Seleccionar industria</option>
+                                <option value="SUGAR_PROCESSING">Procesamiento de Azúcar</option>
+                                <option value="LOGISTICS">Logística</option>
+                                <option value="SUPPLIES">Suministros</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="productTypeId" class="form-label">Tipo de Producto *</label>
+                            <select class="form-select" id="productTypeId" required>
+                                <option value="">Seleccionar tipo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="categoryId" class="form-label">Categoría *</label>
+                            <select class="form-select" id="categoryId" required>
+                                <option value="">Seleccionar categoría</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="unit" class="form-label">Unidad *</label>
+                            <input type="text" class="form-control" id="unit" placeholder="kg, ton, etc." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="standardCost" class="form-label">Costo Estándar</label>
+                            <input type="number" class="form-control" id="standardCost" step="0.01" min="0">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="standardMargin" class="form-label">Margen Estándar (%)</label>
+                            <input type="number" class="form-control" id="standardMargin" step="0.01" min="0" max="100">
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="notes" class="form-label">Notas</label>
+                            <textarea class="form-control" id="notes" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentPage = 1;
+let currentFilters = {};
+
+// Products API service
+const productsService = {
+    async getProducts(page = 1, filters = {}) {
+        const params = new URLSearchParams({
+            limit: 20,
+            offset: (page - 1) * 20,
+            ...filters
+        });
+        return await apiService.get(`/api/products/search?${params}`);
+    },
+    
+    async getProduct(id) {
+        return await apiService.get(`/api/products/${id}`);
+    },
+    
+    async createProduct(data) {
+        return await apiService.post('/api/products', data);
+    },
+    
+    async updateProduct(id, data) {
+        return await apiService.put(`/api/products/${id}`, data);
+    },
+    
+    async deleteProduct(id) {
+        return await apiService.delete(`/api/products/${id}`);
+    },
+    
+    async getSuggestions(query) {
+        return await apiService.get(`/api/products/suggestions?query=${encodeURIComponent(query)}`);
+    },
+    
+    async getFilterOptions() {
+        return await apiService.get('/api/products/filter-options');
+    }
+};
+
+// Initialize products page
+async function initProducts() {
+    try {
+        await loadFilterOptions();
+        await loadProducts();
+        setupSearchSuggestions();
+        
+        utils.showToast('Productos cargados exitosamente', 'success');
+    } catch (error) {
+        console.error('Error loading products:', error);
+        utils.showToast('Error al cargar los productos', 'error');
+    }
+}
+
+// Load filter options
+async function loadFilterOptions() {
+    try {
+        const options = await productsService.getFilterOptions();
+        
+        // Populate category filter
+        const categoryFilter = document.getElementById('categoryFilter');
+        categoryFilter.innerHTML = '<option value="">Todas las categorías</option>';
+        options.categories.forEach(cat => {
+            categoryFilter.innerHTML += `<option value="${cat.code}">${cat.name}</option>`;
+        });
+        
+        // Populate modal selects
+        const categorySelect = document.getElementById('categoryId');
+        categorySelect.innerHTML = '<option value="">Seleccionar categoría</option>';
+        options.categories.forEach(cat => {
+            categorySelect.innerHTML += `<option value="${cat.code}">${cat.name}</option>`;
+        });
+        
+        const productTypeSelect = document.getElementById('productTypeId');
+        productTypeSelect.innerHTML = '<option value="">Seleccionar tipo</option>';
+        options.product_types.forEach(type => {
+            productTypeSelect.innerHTML += `<option value="${type.code}">${type.name}</option>`;
+        });
+        
+    } catch (error) {
+        console.error('Error loading filter options:', error);
+    }
+}
+
+// Load products
+async function loadProducts(page = 1, filters = {}) {
+    try {
+        const data = await productsService.getProducts(page, filters);
+        renderProductsTable(data.products);
+        renderPagination(data);
+        
+        currentPage = page;
+        currentFilters = filters;
+    } catch (error) {
+        console.error('Error loading products:', error);
+        utils.showToast('Error al cargar los productos', 'error');
+    }
+}
+
+// Render products table
+function renderProductsTable(products) {
+    const tableBody = document.getElementById('productsTable');
+    
+    if (products.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center py-4">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No se encontraron productos</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    const rows = products.map(product => `
+        <tr>
+            <td><code>${product.product_code}</code></td>
+            <td>${product.product_name}</td>
+            <td>${product.category.category_name}</td>
+            <td>
+                <span class="badge bg-info">${product.industry}</span>
+            </td>
+            <td>$${utils.formatNumber(product.current_sale_price || 0)}</td>
+            <td>
+                <span class="badge bg-${product.current_margin_percentage >= 20 ? 'success' : 
+                    product.current_margin_percentage >= 10 ? 'warning' : 'danger'}">
+                    ${product.current_margin_percentage ? product.current_margin_percentage.toFixed(1) + '%' : 'N/A'}
+                </span>
+            </td>
+            <td>
+                <span class="status-badge status-${product.is_active ? 'active' : 'inactive'}">
+                    ${product.is_active ? 'Activo' : 'Inactivo'}
+                </span>
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary" onclick="editProduct(${product.product_id})" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-outline-info" onclick="viewProductDetails(${product.product_id})" title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="deleteProduct(${product.product_id})" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+    
+    tableBody.innerHTML = rows;
+}
+
+// Render pagination
+function renderPagination(data) {
+    const pagination = document.getElementById('pagination');
+    
+    if (data.total_pages <= 1) {
+        pagination.innerHTML = '';
+        return;
+    }
+    
+    let paginationHtml = '';
+    
+    // Previous button
+    if (data.page > 1) {
+        paginationHtml += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="loadProducts(${data.page - 1}, currentFilters)">Anterior</a>
+            </li>
+        `;
+    }
+    
+    // Page numbers
+    const startPage = Math.max(1, data.page - 2);
+    const endPage = Math.min(data.total_pages, data.page + 2);
+    
+    for (let i = startPage; i <= endPage; i++) {
+        paginationHtml += `
+            <li class="page-item ${i === data.page ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="loadProducts(${i}, currentFilters)">${i}</a>
+            </li>
+        `;
+    }
+    
+    // Next button
+    if (data.page < data.total_pages) {
+        paginationHtml += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="loadProducts(${data.page + 1}, currentFilters)">Siguiente</a>
+            </li>
+        `;
+    }
+    
+    pagination.innerHTML = paginationHtml;
+}
+
+// Setup search suggestions
+function setupSearchSuggestions() {
+    const searchInput = document.getElementById('searchInput');
+    const suggestionsDiv = document.getElementById('searchSuggestions');
+    let debounceTimer;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const query = this.value.trim();
+        
+        if (query.length < 2) {
+            suggestionsDiv.style.display = 'none';
+            return;
+        }
+        
+        debounceTimer = setTimeout(async () => {
+            try {
+                const suggestions = await productsService.getSuggestions(query);
+                renderSuggestions(suggestions, suggestionsDiv);
+            } catch (error) {
+                console.error('Error getting suggestions:', error);
+            }
+        }, 300);
+    });
+    
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+            suggestionsDiv.style.display = 'none';
+        }
+    });
+}
+
+// Render search suggestions
+function renderSuggestions(suggestions, container) {
+    if (suggestions.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+    
+    const suggestionsHtml = suggestions.map(suggestion => `
+        <div class="suggestion-item" onclick="selectSuggestion('${suggestion.display_text}')">
+            <strong>${suggestion.product_code}</strong> - ${suggestion.product_name}
+            <br><small class="text-muted">${suggestion.category}</small>
+        </div>
+    `).join('');
+    
+    container.innerHTML = suggestionsHtml;
+    container.style.display = 'block';
+}
+
+// Select suggestion
+function selectSuggestion(text) {
+    document.getElementById('searchInput').value = text;
+    document.getElementById('searchSuggestions').style.display = 'none';
+    applyFilters();
+}
+
+// Apply filters
+function applyFilters() {
+    const filters = {
+        query: document.getElementById('searchInput').value.trim(),
+        industry: document.getElementById('industryFilter').value,
+        category: document.getElementById('categoryFilter').value,
+        price_range: document.getElementById('priceRangeFilter').value
+    };
+    
+    // Remove empty filters
+    Object.keys(filters).forEach(key => {
+        if (!filters[key]) delete filters[key];
+    });
+    
+    loadProducts(1, filters);
+}
+
+// Open product modal
+function openProductModal(productId = null) {
+    const modal = document.getElementById('productModal');
+    const title = document.getElementById('productModalTitle');
+    const form = document.getElementById('productForm');
+    
+    if (productId) {
+        title.textContent = 'Editar Producto';
+        loadProductForEdit(productId);
+    } else {
+        title.textContent = 'Nuevo Producto';
+        form.reset();
+        document.getElementById('productId').value = '';
+    }
+}
+
+// Load product for editing
+async function loadProductForEdit(productId) {
+    try {
+        const product = await productsService.getProduct(productId);
+        
+        document.getElementById('productId').value = product.product_id;
+        document.getElementById('productCode').value = product.product_code;
+        document.getElementById('productName').value = product.product_name;
+        document.getElementById('industry').value = product.industry;
+        document.getElementById('productTypeId').value = product.product_type.product_type_id;
+        document.getElementById('categoryId').value = product.category.category_id;
+        document.getElementById('unit').value = product.unit;
+        document.getElementById('standardCost').value = product.standard_cost || '';
+        document.getElementById('standardMargin').value = product.standard_margin || '';
+        document.getElementById('notes').value = '';
+        
+    } catch (error) {
+        console.error('Error loading product for edit:', error);
+        utils.showToast('Error al cargar el producto', 'error');
+    }
+}
+
+// Edit product
+function editProduct(productId) {
+    openProductModal(productId);
+    new bootstrap.Modal(document.getElementById('productModal')).show();
+}
+
+// View product details
+function viewProductDetails(productId) {
+    // Implement product details view
+    utils.showToast('Funcionalidad de detalles en desarrollo', 'info');
+}
+
+// Delete product
+async function deleteProduct(productId) {
+    if (!confirm('¿Está seguro de que desea eliminar este producto?')) {
+        return;
+    }
+    
+    try {
+        await productsService.deleteProduct(productId);
+        utils.showToast('Producto eliminado exitosamente', 'success');
+        loadProducts(currentPage, currentFilters);
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        utils.showToast('Error al eliminar el producto', 'error');
+    }
+}
+
+// Handle product form submission
+document.getElementById('productForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const productId = document.getElementById('productId').value;
+    const productData = {
+        product_code: document.getElementById('productCode').value,
+        product_name: document.getElementById('productName').value,
+        industry: document.getElementById('industry').value,
+        product_type_id: parseInt(document.getElementById('productTypeId').value),
+        category_id: parseInt(document.getElementById('categoryId').value),
+        unit: document.getElementById('unit').value,
+        standard_cost: parseFloat(document.getElementById('standardCost').value) || 0,
+        standard_margin: parseFloat(document.getElementById('standardMargin').value) || 0,
+        notes: document.getElementById('notes').value
+    };
+    
+    try {
+        if (productId) {
+            await productsService.updateProduct(productId, productData);
+            utils.showToast('Producto actualizado exitosamente', 'success');
+        } else {
+            await productsService.createProduct(productData);
+            utils.showToast('Producto creado exitosamente', 'success');
+        }
+        
+        bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+        loadProducts(currentPage, currentFilters);
+        
+    } catch (error) {
+        console.error('Error saving product:', error);
+        utils.showToast('Error al guardar el producto', 'error');
+    }
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', initProducts);
+</script>
+{% endblock %}

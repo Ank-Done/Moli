@@ -1,0 +1,504 @@
+================================================================================
+                    DOCUMENTACIÓN TÉCNICA - SISTEMA CYBERIA
+                    Sistema de Inteligencia Empresarial
+                    Moliendas y Alimentos, S.A. de C.V.
+================================================================================
+
+AUTOR: Francisco Gonzalez Gonzalez
+FECHA: 14 de Julio 2025
+VERSION: 1.0.0
+LENGUAJE: Python 3.x
+FRAMEWORK: HTTP Server nativo de Python
+
+================================================================================
+                              ÍNDICE
+================================================================================
+
+1. ARQUITECTURA GENERAL
+2. CONFIGURACIÓN DE BASES DE DATOS
+3. ESTRUCTURA DE ARCHIVOS
+4. CLASES Y MÉTODOS PRINCIPALES
+5. ENDPOINTS DE LA API
+6. PÁGINAS WEB (FRONTEND)
+7. CONEXIONES A BASES DE DATOS
+8. DEBUGGING Y RESOLUCIÓN DE PROBLEMAS
+9. COMANDOS DE EJECUCIÓN
+10. LOGS Y MONITOREO
+
+================================================================================
+                          1. ARQUITECTURA GENERAL
+================================================================================
+
+El sistema Cyberia es una aplicación web monolítica que funciona como:
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    ARQUITECTURA DEL SISTEMA                     │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────┐  │
+│  │   FRONTEND      │    │   BACKEND       │    │  DATABASES  │  │
+│  │   (HTML/CSS/JS) │◄──►│   (Python HTTP) │◄──►│   (SQL Srv) │  │
+│  └─────────────────┘    └─────────────────┘    └─────────────┘  │
+│                                                                 │
+│  • Dashboard               • CyberiaRealSQLHandler              │
+│  • Productos               • API Endpoints                     │
+│  • Ventas                  • SQL Queries                       │
+│  • Gráficas                • Data Processing                   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+COMPONENTES PRINCIPALES:
+- HTTP Server (Puerto 8010)
+- Handler principal (CyberiaRealSQLHandler)
+- Conexiones SQL Server (2 bases de datos)
+- Frontend integrado (HTML/CSS/JavaScript)
+
+================================================================================
+                      2. CONFIGURACIÓN DE BASES DE DATOS
+================================================================================
+
+El sistema conecta a DOS bases de datos SQL Server:
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    CONFIGURACIÓN DE BASES DE DATOS              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  BASE DE DATOS 1: CYBERIA                                       │
+│  ├─ Servidor: localhost                                         │
+│  ├─ Base: Cyberia                                              │
+│  ├─ Usuario: SA                                                │
+│  ├─ Contraseña: Mar120305!                                     │
+│  └─ Uso: Productos, Clientes, Órdenes                         │
+│                                                                 │
+│  BASE DE DATOS 2: adMOLIENDAS_Y_ALIMENTO                      │
+│  ├─ Servidor: localhost                                         │
+│  ├─ Base: adMOLIENDAS_Y_ALIMENTO                              │
+│  ├─ Usuario: SA                                                │
+│  ├─ Contraseña: Mar120305!                                     │
+│  └─ Uso: Movimientos, Agentes, Conceptos, Gráficas            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+DRIVER: ODBC Driver 18 for SQL Server
+CONFIGURACIÓN: TrustServerCertificate=yes
+
+================================================================================
+                        3. ESTRUCTURA DE ARCHIVOS
+================================================================================
+
+fastapi_cyberia/
+├── cyberia_real_sql.py          # ARCHIVO PRINCIPAL
+├── explore_admoliendas_db.py     # Script exploración DB
+├── explore_real_columns.py      # Script análisis columnas
+├── debug_orderid_mismatch.py    # Debug OrderID issues
+├── test_corrected_queries.py    # Tests queries SQL
+├── server_graphics.log          # Log servidor actual
+├── server_fixed.log             # Log servidor anterior
+└── DOCUMENTACION_CYBERIA.txt    # Este archivo
+
+ARCHIVO PRINCIPAL: cyberia_real_sql.py
+- Tamaño: ~1,400 líneas
+- Funcionalidad: Servidor HTTP completo
+- Dependencias: pyodbc, http.server, socketserver
+
+================================================================================
+                      4. CLASES Y MÉTODOS PRINCIPALES
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    CLASE: CyberiaRealSQLHandler                 │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  MÉTODOS DE CONEXIÓN:                                          │
+│  ├─ get_db_connection(use_admoliendas=False)                   │
+│  ├─ execute_query(query, params=None, use_admoliendas=False)   │
+│  └─ send_json_response(data)                                   │
+│                                                                 │
+│  MÉTODOS DE DATOS:                                             │
+│  ├─ get_dashboard_metrics()                                    │
+│  ├─ get_all_products()                                         │
+│  ├─ get_all_sales()                                            │
+│  ├─ get_annual_graphics_data()                                 │
+│  ├─ get_agents_data()                                          │
+│  ├─ get_concepts_data()                                        │
+│  └─ get_filtered_sales(query_string)                          │
+│                                                                 │
+│  MÉTODOS DE PÁGINAS:                                           │
+│  ├─ serve_dashboard()                                          │
+│  ├─ serve_products_page()                                      │
+│  ├─ serve_sales_page()                                         │
+│  └─ serve_graphics_page()                                      │
+│                                                                 │
+│  MÉTODOS DE UTILIDAD:                                          │
+│  ├─ format_currency_millions(amount)                           │
+│  ├─ get_total_customers()                                      │
+│  ├─ get_top_products()                                         │
+│  └─ get_worst_products()                                       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                           5. ENDPOINTS DE LA API
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         ENDPOINTS HTTP                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  PÁGINAS WEB (GET):                                            │
+│  ├─ /                          → Dashboard principal           │
+│  ├─ /dashboard                 → Dashboard principal           │
+│  ├─ /productos                 → Página productos             │
+│  ├─ /ventas                    → Página ventas                │
+│  └─ /graficas                  → Página gráficas              │
+│                                                                 │
+│  API ENDPOINTS (GET):                                          │
+│  ├─ /health                    → Estado del servidor          │
+│  ├─ /api/analytics/dashboard-metrics → Métricas dashboard     │
+│  ├─ /api/productos             → Lista productos              │
+│  ├─ /api/ventas                → Lista ventas                 │
+│  ├─ /api/graficas/datos-anuales → Datos anuales              │
+│  ├─ /api/graficas/agentes      → Datos agentes               │
+│  ├─ /api/graficas/conceptos    → Datos conceptos             │
+│  └─ /api/ventas/filtradas      → Ventas filtradas            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+FORMATO RESPUESTAS: JSON
+CORS: Habilitado para todos los orígenes
+PUERTO: 8010
+
+================================================================================
+                        6. PÁGINAS WEB (FRONTEND)
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                           FRONTEND                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  DASHBOARD (/):                                                │
+│  ├─ Métricas principales (6 tarjetas)                          │
+│  ├─ Ventas del mes actual                                      │
+│  ├─ Ventas año a la fecha                                      │
+│  ├─ Productos activos                                          │
+│  ├─ Clientes activos                                           │
+│  └─ Orden promedio                                             │
+│                                                                 │
+│  PRODUCTOS (/productos):                                       │
+│  ├─ Tabla productos activos                                    │
+│  ├─ Código, nombre, categoría                                  │
+│  ├─ Precio, unidad                                             │
+│  └─ Datos desde DB Cyberia                                     │
+│                                                                 │
+│  VENTAS (/ventas):                                             │
+│  ├─ Filtros avanzados                                          │
+│  ├─ Tabla ventas recientes                                     │
+│  ├─ Filtro por agente                                          │
+│  ├─ Filtro por concepto                                        │
+│  ├─ Filtro por año                                             │
+│  └─ Datos desde admOLIENDAS_Y_ALIMENTO                        │
+│                                                                 │
+│  GRÁFICAS (/graficas):                                         │
+│  ├─ 4 gráficas principales                                     │
+│  ├─ Ventas por año (barras)                                    │
+│  ├─ Movimientos por año (líneas)                               │
+│  ├─ Agentes por ventas (dona)                                  │
+│  ├─ Conceptos por ventas (barras)                              │
+│  └─ Filtros dinámicos                                          │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+TECNOLOGÍAS FRONTEND:
+- HTML5 + CSS3 (Variables CSS)
+- JavaScript ES6+ (Fetch API, Async/Await)
+- Chart.js para gráficas
+- Responsive design (mobile-first)
+
+================================================================================
+                      7. CONEXIONES A BASES DE DATOS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    CONEXIONES SQL SERVER                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  MÉTODO: get_db_connection(use_admoliendas=False)               │
+│  ├─ Parámetro: use_admoliendas (bool)                          │
+│  ├─ Retorna: Connection object o None                          │
+│  └─ Maneja: Reconexión automática                              │
+│                                                                 │
+│  MÉTODO: execute_query(query, params, use_admoliendas)         │
+│  ├─ Parámetros: query (str), params (list), use_admoliendas   │
+│  ├─ Retorna: List[Dict] con resultados                         │
+│  └─ Maneja: Errores SQL, logging                               │
+│                                                                 │
+│  TABLAS PRINCIPALES:                                           │
+│                                                                 │
+│  DB CYBERIA:                                                   │
+│  ├─ Products (productos)                                       │
+│  ├─ ProductCategories (categorías)                             │
+│  ├─ Customers (clientes)                                       │
+│  ├─ SalesOrders (órdenes)                                      │
+│  └─ UnitsOfMeasure (unidades)                                  │
+│                                                                 │
+│  DB admOLIENDAS_Y_ALIMENTO:                                   │
+│  ├─ admMovimientos (movimientos)                               │
+│  ├─ admAgentes (agentes)                                       │
+│  ├─ admConceptos (conceptos)                                   │
+│  ├─ admDocumentos (documentos)                                 │
+│  └─ admClientes (clientes)                                     │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+COLUMNAS IMPORTANTES:
+- admMovimientos: CFECHA, CTOTAL, CIDAGENTE, CIDCONCEPTO
+- admAgentes: CCODIGOAGENTE, CNOMBREAGENTE, CTIPO
+- admConceptos: CCODIGOCONCEPTO, CNOMBRECONCEPTO, CTIPO
+
+================================================================================
+                   8. DEBUGGING Y RESOLUCIÓN DE PROBLEMAS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        DEBUGGING GUIDE                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  PROBLEMAS COMUNES:                                            │
+│                                                                 │
+│  1. ERROR DE CONEXIÓN SQL:                                     │
+│     ├─ Síntoma: "Error conectando a SQL Server"                │
+│     ├─ Causa: Credenciales, driver, firewall                   │
+│     ├─ Solución: Verificar DB_CONFIG y ADMOLIENDAS_CONFIG      │
+│     └─ Comando: netstat -an | grep 1433                        │
+│                                                                 │
+│  2. MÓDULO PYODBC NO ENCONTRADO:                               │
+│     ├─ Síntoma: "pyodbc no disponible"                         │
+│     ├─ Causa: Dependencia no instalada                         │
+│     ├─ Solución: pip install pyodbc                            │
+│     └─ Alternativa: Usar datos simulados                       │
+│                                                                 │
+│  3. PUERTO EN USO:                                             │
+│     ├─ Síntoma: "Address already in use"                       │
+│     ├─ Causa: Servidor anterior corriendo                      │
+│     ├─ Solución: pkill -f "python.*cyberia_real_sql.py"       │
+│     └─ Verificar: netstat -tulpn | grep 8010                   │
+│                                                                 │
+│  4. DATOS VACÍOS EN FRONTEND:                                  │
+│     ├─ Síntoma: Tablas vacías, "loading..." permanente         │
+│     ├─ Causa: Endpoints no responden, CORS, JS error          │
+│     ├─ Solución: Verificar console.log en navegador           │
+│     └─ Debug: curl http://localhost:8010/health               │
+│                                                                 │
+│  5. GRÁFICAS NO CARGAN:                                        │
+│     ├─ Síntoma: Charts.js errors, canvas no renderiza          │
+│     ├─ Causa: CDN Chart.js, datos malformados                 │
+│     ├─ Solución: Verificar estructura JSON response           │
+│     └─ Debug: /api/graficas/datos-anuales                     │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+HERRAMIENTAS DE DEBUG:
+
+1. LOGS DEL SERVIDOR:
+   - Ubicación: server_graphics.log
+   - Comando: tail -f server_graphics.log
+   - Nivel: INFO, ERROR, WARNING
+
+2. PRUEBAS DE ENDPOINTS:
+   - curl http://localhost:8010/health
+   - curl http://localhost:8010/api/productos
+   - curl http://localhost:8010/api/ventas
+
+3. CONSOLA DEL NAVEGADOR:
+   - F12 → Console
+   - Verificar errores JavaScript
+   - Network tab para requests HTTP
+
+4. CONEXIÓN BASE DE DATOS:
+   - Ejecutar: explore_admoliendas_db.py
+   - Verificar: explore_real_columns.py
+   - Debug: debug_orderid_mismatch.py
+
+================================================================================
+                         9. COMANDOS DE EJECUCIÓN
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                     COMANDOS DE EJECUCIÓN                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  INICIAR SERVIDOR:                                             │
+│  ├─ python3 cyberia_real_sql.py                               │
+│  ├─ python3 cyberia_real_sql.py > server.log 2>&1 &          │
+│  └─ nohup python3 cyberia_real_sql.py > server.log 2>&1 &     │
+│                                                                 │
+│  DETENER SERVIDOR:                                             │
+│  ├─ Ctrl+C (si está en foreground)                            │
+│  ├─ pkill -f "python.*cyberia_real_sql.py"                    │
+│  └─ kill -9 $(pgrep -f cyberia_real_sql.py)                   │
+│                                                                 │
+│  VERIFICAR ESTADO:                                             │
+│  ├─ ps aux | grep cyberia_real_sql.py                         │
+│  ├─ netstat -tulpn | grep 8010                                │
+│  └─ curl http://localhost:8010/health                         │
+│                                                                 │
+│  DEBUGGING:                                                    │
+│  ├─ python3 explore_admoliendas_db.py                         │
+│  ├─ python3 explore_real_columns.py                           │
+│  ├─ python3 debug_orderid_mismatch.py                         │
+│  └─ python3 test_corrected_queries.py                         │
+│                                                                 │
+│  LOGS:                                                         │
+│  ├─ tail -f server_graphics.log                               │
+│  ├─ tail -f server_fixed.log                                  │
+│  └─ journalctl -f (systemd logs)                              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+VARIABLES DE ENTORNO:
+- No se requieren variables especiales
+- Configuración hardcodeada en DB_CONFIG y ADMOLIENDAS_CONFIG
+
+================================================================================
+                          10. LOGS Y MONITOREO
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         LOGS Y MONITOREO                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  TIPOS DE LOG:                                                 │
+│  ├─ INFO: Conexiones exitosas, requests HTTP                   │
+│  ├─ ERROR: Errores SQL, conexiones fallidas                    │
+│  ├─ WARNING: Fallbacks a datos simulados                       │
+│  └─ DEBUG: Queries SQL, parámetros                             │
+│                                                                 │
+│  ARCHIVOS DE LOG:                                              │
+│  ├─ server_graphics.log (actual)                               │
+│  ├─ server_fixed.log (anterior)                                │
+│  └─ nohup.out (si se usa nohup)                                │
+│                                                                 │
+│  FORMATO LOG:                                                  │
+│  ├─ Timestamp automático                                       │
+│  ├─ Nivel (INFO, ERROR, WARNING)                              │
+│  ├─ Módulo (__main__)                                          │
+│  └─ Mensaje descriptivo                                        │
+│                                                                 │
+│  MÉTRICAS A MONITOREAR:                                        │
+│  ├─ Conexiones SQL exitosas/fallidas                           │
+│  ├─ Tiempo de respuesta endpoints                              │
+│  ├─ Requests HTTP por minuto                                   │
+│  ├─ Errores JavaScript frontend                                │
+│  └─ Uso de memoria/CPU                                         │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+EJEMPLO LOG EXITOSO:
+INFO:__main__:✅ pyodbc disponible - usando SQL Server real
+INFO:__main__:✅ Conexión establecida a Cyberia
+INFO:__main__:✅ Conexión establecida a admOLIENDAS_Y_ALIMENTO
+127.0.0.1 - - [14/Jul/2025 14:47:50] "GET /api/graficas/datos-anuales HTTP/1.1" 200
+
+EJEMPLO LOG ERROR:
+ERROR:__main__:❌ Error conectando a SQL Server: ('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]SSL Provider: certificate verify failed')
+WARNING:__main__:⚠️ Usando datos simulados por error de conexión
+
+================================================================================
+                              FLUJO DE DATOS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                          FLUJO DE DATOS                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. USUARIO ACCEDE A PÁGINA:                                   │
+│     ├─ Navegador → HTTP GET /                                  │
+│     ├─ Servidor → serve_dashboard()                            │
+│     ├─ Respuesta → HTML/CSS/JS                                 │
+│     └─ Navegador → Renderiza página                            │
+│                                                                 │
+│  2. PÁGINA CARGA DATOS:                                        │
+│     ├─ JavaScript → fetch('/api/analytics/dashboard-metrics')  │
+│     ├─ Servidor → get_dashboard_metrics()                      │
+│     ├─ Método → execute_query() con SQL                        │
+│     ├─ Base datos → Ejecuta query                              │
+│     ├─ Servidor → Procesa resultados                           │
+│     ├─ Respuesta → JSON con datos                              │
+│     └─ JavaScript → Actualiza DOM                              │
+│                                                                 │
+│  3. USUARIO APLICA FILTROS:                                    │
+│     ├─ JavaScript → Captura evento change                      │
+│     ├─ Función → applyFilters()                                │
+│     ├─ Request → /api/ventas/filtradas?agente=AG001            │
+│     ├─ Servidor → get_filtered_sales()                         │
+│     ├─ Base datos → Query con WHERE clauses                    │
+│     ├─ Respuesta → JSON filtrado                               │
+│     └─ JavaScript → Actualiza tabla                            │
+│                                                                 │
+│  4. GRÁFICAS SE ACTUALIZAN:                                    │
+│     ├─ JavaScript → loadGraphicsData()                         │
+│     ├─ Múltiples → fetch() paralelos                           │
+│     ├─ Chart.js → Procesa datos                                │
+│     ├─ Canvas → Renderiza gráficas                             │
+│     └─ Usuario → Ve visualizaciones                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                            TESTING Y VALIDACIÓN
+================================================================================
+
+COMANDOS DE TESTING:
+
+1. VERIFICAR SERVIDOR:
+   curl -I http://localhost:8010/
+
+2. PROBAR ENDPOINTS:
+   curl http://localhost:8010/health
+   curl http://localhost:8010/api/productos
+   curl http://localhost:8010/api/ventas
+   curl http://localhost:8010/api/graficas/datos-anuales
+
+3. VERIFICAR FILTROS:
+   curl "http://localhost:8010/api/ventas/filtradas?agente=AG001"
+   curl "http://localhost:8010/api/ventas/filtradas?año=2024"
+
+4. TESTING DE CARGA:
+   for i in {1..10}; do curl -s http://localhost:8010/health; done
+
+5. VERIFICAR DATOS:
+   python3 explore_admoliendas_db.py
+   python3 test_corrected_queries.py
+
+================================================================================
+                               NOTAS FINALES
+================================================================================
+
+CONSIDERACIONES IMPORTANTES:
+
+1. El sistema funciona con datos reales de SQL Server
+2. Hay fallbacks a datos simulados si la DB no está disponible
+3. Las credenciales están hardcodeadas (SA/Mar120305!)
+4. El puerto 8010 debe estar libre
+5. Se requiere ODBC Driver 18 for SQL Server
+6. El sistema maneja CORS automáticamente
+7. Las gráficas usan Chart.js desde CDN
+
+PRÓXIMOS PASOS RECOMENDADOS:
+
+1. Implementar autenticación y autorización
+2. Externalizar configuración a archivos config
+3. Agregar logging más detallado
+4. Implementar caché para mejorar performance
+5. Agregar tests unitarios
+6. Dockerizar la aplicación
+7. Implementar SSL/HTTPS
+
+CONTACTO:
+- Sistema desarrollado por Claude Code Assistant
+- Para soporte técnico, consultar logs del servidor
+- Para debugging, usar las herramientas mencionadas
+
+================================================================================
+                                   FIN
+================================================================================

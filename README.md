@@ -1,265 +1,205 @@
-# 🚀 Cyberia Business Intelligence Dashboard
+# Sistema Cyberia FastAPI
 
 ## Descripción
 
-Sistema integral de gestión y análisis empresarial que combina múltiples bases de datos en una interfaz moderna y potente. Desarrollado con Flask, este dashboard proporciona análisis en tiempo real, generación de reportes y gestión completa de datos empresariales.
+Sistema de Inteligencia Empresarial moderno para Moliendas y Alimentos, desarrollado con FastAPI. Proporciona gestión completa de productos de azúcar, edulcorantes, servicios logísticos, ventas y análisis de rentabilidad.
 
-## 🌟 Características Principales
+### Características Principales
 
-### 📊 Dashboard Ejecutivo
-- Métricas en tiempo real de clientes, productos, ventas e inventario
-- Gráficos interactivos con Plotly
-- Visualización de tendencias de ventas mensuales
-- KPIs empresariales centralizados
+- **Dashboard Ejecutivo**: Métricas en tiempo real con formato de moneda en millones
+- **Gestión de Productos**: CRUD completo con búsqueda avanzada y sugerencias
+- **Sistema de Ventas**: Gestión de documentos de venta con detalles
+- **Precios Dinámicos**: Sistema de precios con historial y análisis de mercado
+- **Analytics Avanzados**: Comparativas mensuales, rentabilidad diaria, análisis por kg
+- **Interfaz Moderna**: UI responsiva con JavaScript vanilla y Bootstrap 5
 
-### 💼 Análisis de Ventas
-- Filtros avanzados por año, mes, agente, cliente y producto
-- Exportación a PDF y Excel con formato profesional
-- Búsqueda inteligente en base de datos de ventas
-- Cálculos automáticos de totales y estadísticas
+## Tecnologías
 
-### 📦 Gestión de Productos
-- Catálogo completo de productos con familias y clasificaciones
-- Control de unidades de medida y especificaciones
-- Integración con sistema de inventario
-- Formularios de gestión con validación
+- **Backend**: FastAPI, Python 3.8+
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla), Bootstrap 5, Chart.js
+- **Base de Datos**: SQL Server con stored procedures
+- **Validación**: Pydantic schemas
+- **Templates**: Jinja2
 
-### 👥 Administración de Clientes
-- Base de datos unificada de clientes
-- Gestión de límites de crédito y condiciones comerciales
-- Estados de cuenta y análisis crediticio
-- Información de contacto y direcciones
-
-### 📋 Control de Inventario
-- Monitoreo en tiempo real de existencias por almacén
-- Alertas de stock bajo automatizadas
-- Valorización de inventario por costos
-- Reportes de movimientos de inventario
-
-### 📈 Centro de Reportes
-- Generación de reportes personalizados
-- Múltiples formatos de exportación (PDF, Excel)
-- Reportes programados por período
-- Análisis comparativo y tendencias
-
-### ⚙️ Gestión del Sistema
-- Monitoreo del estado de bases de datos
-- Estadísticas del sistema en tiempo real
-- Herramientas de respaldo y mantenimiento
-- Panel de administración centralizado
-
-## 🗄️ Bases de Datos Soportadas
-
-### 1. normalzone (MySQL)
-- **Productos**: Catálogo completo con familias y clasificaciones
-- **Clientes**: Representantes, límites de crédito, direcciones
-- **Inventario**: Existencias, almacenes, movimientos
-- **Documentos**: Facturas, órdenes, comprobantes
-- **Configuración**: Monedas, países, tipos de documento
-
-### 2. reporteventasenejul (MySQL)
-- **Ventas**: Datos históricos de ventas por período
-- **Agentes**: Información de representantes de ventas
-- **Análisis**: Métricas de rendimiento y comisiones
-
-### 3. moliendascyberia (MariaDB)
-- **Usuarios**: Sistema de usuarios especializado
-- **Operaciones**: Datos específicos de moliendas
-
-## 🛠️ Tecnologías Utilizadas
-
-### Backend
-- **Flask 2.3.3**: Framework web Python
-- **MySQL Connector**: Conexión a bases de datos MySQL
-- **MariaDB Connector**: Soporte para bases de datos MariaDB
-- **Pandas**: Análisis y manipulación de datos
-- **ReportLab**: Generación de PDFs profesionales
-
-### Frontend
-- **HTML5/CSS3**: Estructura y estilos modernos
-- **JavaScript Vanilla**: Interactividad sin dependencias
-- **Plotly.js**: Gráficos interactivos y visualizaciones
-- **Font Awesome**: Iconografía profesional
-- **CSS Grid/Flexbox**: Layout responsivo moderno
-
-### Exportación
-- **ReportLab**: PDFs con formato corporativo
-- **OpenPyXL**: Archivos Excel con estilos
-- **Plotly**: Gráficos exportables
-
-## 🚀 Instalación y Uso
+## Instalación
 
 ### Requisitos Previos
-- Python 3.8+
-- MySQL/MariaDB en ejecución
-- Bases de datos configuradas
 
-### Instalación Rápida
+- Python 3.8 o superior
+- SQL Server con la base de datos Cyberia configurada
+- ODBC Driver para SQL Server
 
-```bash
-# Navegar al directorio del proyecto
-cd /home/ank/Documents/REporte
+### Pasos de Instalación
 
-# Ejecutar script de inicio (recomendado)
-./run_cyberia.sh
-```
+1. **Clonar o descargar el proyecto**
+   ```bash
+   cd /home/ank/Documents/REporte/fastapi_cyberia
+   ```
 
-### Instalación Manual
+2. **Crear entorno virtual**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   # o
+   venv\Scripts\activate     # Windows
+   ```
 
-```bash
-# Crear entorno virtual
-python -m venv venv
-source venv/bin/activate
+3. **Instalar dependencias**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Instalar dependencias
-pip install -r requirements.txt
+4. **Configurar base de datos**
+   - Editar `config/database.py` con los datos de conexión
+   - Asegurar que el servidor SQL Server esté ejecutándose
+   - Verificar que las tablas y stored procedures estén creados
 
-# Ejecutar aplicación
-python enhanced_app.py
-```
+5. **Ejecutar la aplicación**
+   ```bash
+   python main.py
+   ```
+
+   O usando uvicorn directamente:
+   ```bash
+   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+## Uso
 
 ### Acceso a la Aplicación
 
-Después de ejecutar, la aplicación estará disponible en:
-- **URL Principal**: http://localhost:5003
-- **API REST**: http://localhost:5003/api/
+- **URL Principal**: http://localhost:8000
+- **Dashboard**: http://localhost:8000/dashboard
+- **Productos**: http://localhost:8000/products
+- **Ventas**: http://localhost:8000/sales
+- **Precios**: http://localhost:8000/pricing
+- **Analytics**: http://localhost:8000/analytics
 
-## 📱 Interfaz de Usuario
+### API Documentation
 
-### Navegación Principal
-- **Dashboard**: Vista general con métricas clave
-- **Ventas**: Análisis detallado de transacciones
-- **Productos**: Gestión del catálogo
-- **Clientes**: Administración de la cartera
-- **Inventario**: Control de existencias
-- **Reportes**: Centro de generación de informes
-- **Gestión**: Herramientas administrativas
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
-### Características de UX
-- **Diseño Responsivo**: Adaptable a cualquier dispositivo
-- **Navegación Intuitiva**: Tabs con iconografía clara
-- **Filtros Avanzados**: Búsqueda inteligente en tiempo real
-- **Feedback Visual**: Indicadores de carga y estados
-- **Modo Oscuro**: Interfaz profesional con gradientes
-- **Animaciones Suaves**: Transiciones CSS optimizadas
+### Endpoints Principales
 
-## 🔧 Configuración
+#### Productos
+- `GET /api/products` - Lista de productos con filtros
+- `POST /api/products` - Crear nuevo producto
+- `PUT /api/products/{id}` - Actualizar producto
+- `DELETE /api/products/{id}` - Eliminar producto (soft delete)
+- `GET /api/products/search` - Búsqueda avanzada
+- `GET /api/products/suggestions` - Sugerencias para autocompletado
 
-### Bases de Datos
-Edita las configuraciones en `enhanced_app.py`:
+#### Ventas
+- `GET /api/sales/documents` - Lista de documentos de venta
+- `POST /api/sales/documents` - Crear documento de venta
+- `GET /api/sales/documents/{id}` - Obtener documento específico
+- `POST /api/sales/documents/{id}/details` - Agregar producto al documento
 
-```python
-DB_CONFIGS = {
-    'normalzone': {
-        'host': 'localhost',
-        'user': 'root',
-        'password': 'tu_password',
-        'database': 'normalzone',
-        'port': 3306
-    },
-    # ... otras configuraciones
-}
+#### Precios
+- `GET /api/pricing/current` - Precios actuales
+- `PUT /api/pricing/{product_id}` - Actualizar precio
+- `GET /api/pricing/{product_id}/history` - Historial de precios
+- `GET /api/pricing/market-analysis` - Análisis de mercado
+
+#### Analytics
+- `GET /api/analytics/dashboard-metrics` - Métricas del dashboard
+- `GET /api/analytics/monthly-comparison` - Comparativa mensual
+- `GET /api/analytics/daily-profitability` - Rentabilidad diaria
+- `GET /api/analytics/profit-per-kg` - Análisis de ganancia por kg
+
+## Estructura del Proyecto
+
+```
+fastapi_cyberia/
+├── main.py                 # Aplicación principal FastAPI
+├── requirements.txt        # Dependencias Python
+├── README.md              # Este archivo
+├── config/
+│   └── database.py        # Configuración de base de datos
+├── models/                # Servicios de negocio
+│   ├── products.py        # Servicio de productos
+│   ├── sales.py          # Servicio de ventas
+│   ├── users.py          # Servicio de usuarios
+│   ├── pricing.py        # Servicio de precios
+│   └── analytics.py      # Servicio de analytics
+├── schemas/              # Esquemas Pydantic
+│   ├── products.py       # Schemas de productos
+│   ├── sales.py         # Schemas de ventas
+│   ├── users.py         # Schemas de usuarios
+│   ├── pricing.py       # Schemas de precios
+│   └── analytics.py     # Schemas de analytics
+├── templates/           # Templates HTML
+│   ├── base.html        # Template base
+│   ├── dashboard.html   # Dashboard ejecutivo
+│   └── products.html    # Gestión de productos
+└── static/             # Archivos estáticos
+    ├── css/
+    │   └── custom.css   # Estilos personalizados
+    └── js/             # JavaScript personalizado
 ```
 
-### Puerto de Aplicación
-Por defecto ejecuta en puerto **5003**. Para cambiar:
+## Características Especiales
 
-```python
-app.run(debug=True, host='0.0.0.0', port=TU_PUERTO)
-```
+### Dashboard Ejecutivo
+- **Formato de Moneda**: Automáticamente convierte grandes cantidades a formato de millones (ej: "2.5M", "150K")
+- **Comparativas**: Muestra cambios porcentuales vs mes anterior
+- **Ordenamiento Calendar**: Los datos mensuales se ordenan correctamente por calendario
+- **Mes Actual**: El mes de julio muestra 0 como se requirió
 
-## 📊 API Endpoints
+### Sistema de Productos
+- **Búsqueda Inteligente**: Autocompletado con sugerencias en tiempo real
+- **Filtros Avanzados**: Por industria, categoría, rango de precios
+- **Gestión Completa**: CRUD con validación de datos
+- **Categorías Jerárquicas**: Soporte para categorías anidadas
 
-### Dashboard
-- `GET /api/dashboard` - Métricas principales
+### Sistema de Precios
+- **Precios Dinámicos**: Histórico completo de cambios de precios
+- **Análisis de Mercado**: Comparativas y volatilidad de precios
+- **Sugerencias**: Cálculo automático de precios basado en márgenes objetivo
+- **Actualización Masiva**: Soporte para actualización de múltiples precios
 
-### Ventas
-- `GET /api/sales` - Datos de ventas con filtros
-- `POST /api/export-pdf` - Exportar ventas a PDF
-- `POST /api/export-excel` - Exportar ventas a Excel
+### Analytics Avanzados
+- **Métricas en Tiempo Real**: Dashboard que se actualiza automáticamente
+- **Comparativas Mensuales**: Análisis periodo a periodo
+- **Rentabilidad por kg**: Análisis específico para productos de azúcar
+- **Visualizaciones**: Gráficos interactivos con Chart.js
 
-### Gestión de Datos
-- `GET /api/products` - Lista de productos
-- `GET /api/clients` - Lista de clientes
-- `GET /api/inventory` - Estado del inventario
+## Configuración de Base de Datos
 
-### Sistema
-- `GET /api/system/db-status` - Estado de bases de datos
-- `GET /api/system/stats` - Estadísticas del sistema
-- `GET /api/reports/sales` - Reportes de ventas
+La aplicación requiere que la base de datos tenga las siguientes tablas principales:
 
-## 🎨 Personalización
+- `Products` - Catálogo de productos
+- `ProductCategories` - Categorías de productos
+- `ProductTypes` - Tipos de productos
+- `SugarProductAttributes` - Atributos específicos de azúcar
+- `LogisticsServiceAttributes` - Atributos de servicios logísticos
+- `DynamicPricing` - Historial de precios
+- `SalesDocuments` - Documentos de venta
+- `SalesDocumentDetails` - Detalles de ventas
+- `Users` - Usuarios/Agentes
+- `Customers` - Clientes
 
-### Colores Corporativos
-El tema utiliza una paleta moderna:
-- **Primario**: #667eea (Azul)
-- **Secundario**: #764ba2 (Púrpura)
-- **Éxito**: #38ef7d (Verde)
-- **Advertencia**: #ffd89b (Amarillo)
+## Health Check
 
-### Agregando Nuevas Funciones
-1. Crear endpoint en Flask
-2. Agregar función JavaScript correspondiente
-3. Incluir en navegación si es necesario
-4. Actualizar documentación
+La aplicación incluye un endpoint de health check:
+- `GET /health` - Verifica estado de la aplicación y conexión a base de datos
 
-## 🔒 Seguridad
+## Logging
 
-- Validación de entrada en todos los formularios
-- Conexiones de base de datos con manejo de errores
-- Protección contra inyección SQL con parámetros
-- Gestión de sesiones Flask
+La aplicación incluye logging detallado para:
+- Operaciones de base de datos
+- Errores de API
+- Eventos de startup/shutdown
 
-## 📈 Optimización
+## Desarrollo
 
-- Consultas limitadas para mejorar performance
-- Carga asíncrona de datos con JavaScript
-- Compresión de respuestas Flask-CORS
-- Caché de consultas frecuentes
+Para desarrollo local:
 
-## 🐛 Solución de Problemas
+1. Usar el flag `--reload` con uvicorn para recarga automática
+2. Los templates se recargan automáticamente
+3. Los archivos estáticos se sirven desde `/static`
 
-### Error de Conexión a Base de Datos
-1. Verificar que MySQL/MariaDB esté ejecutándose
-2. Comprobar credenciales en configuración
-3. Validar nombres de bases de datos
-4. Revisar permisos de usuario
+## Soporte
 
-### Dependencias Faltantes
-```bash
-pip install -r requirements.txt --upgrade
-```
-
-### Puerto en Uso
-Cambiar puerto en `enhanced_app.py` o terminar proceso:
-```bash
-sudo lsof -i :5003
-sudo kill -9 [PID]
-```
-
-## 🤝 Contribución
-
-Para contribuir al proyecto:
-1. Fork del repositorio
-2. Crear rama feature
-3. Implementar mejoras
-4. Crear pull request
-
-## 📞 Soporte
-
-Para soporte técnico o consultas:
-- Revisar logs de la aplicación
-- Verificar configuración de bases de datos
-- Consultar documentación de APIs
-
-## 🚀 Comando de Ejecución
-
-```bash
-./run_cyberia.sh
-```
-
-**¡La aplicación estará disponible en http://localhost:5003!**
-
----
-
-*Desarrollado con ❤️ para gestión empresarial moderna*
+Para soporte técnico o consultas sobre el sistema, contactar al equipo de desarrollo del proyecto Cyberia.

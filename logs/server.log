@@ -1,0 +1,24 @@
+nohup: ignoring input
+INFO:__main__:✅ pyodbc disponible - usando SQL Server real
+127.0.0.1 - - [14/Jul/2025 14:06:58] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:06:58] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:07:01] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:07:01] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:07:33] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:07:33] "GET /api/ventas HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:07:37] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:07:37] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:08:34] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:08:34] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:08:34] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:08:35] "GET /api/productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:10:08] "GET /api/productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:10:11] "GET /api/ventas HTTP/1.1" 200 -

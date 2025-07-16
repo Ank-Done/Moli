@@ -1,0 +1,53 @@
+nohup: ignoring input
+INFO:__main__:✅ pyodbc disponible - usando SQL Server real
+🚀 Iniciando Cyberia Real SQL Server...
+🗄️ SQL Server: DISPONIBLE
+🌐 Servidor disponible en: http://localhost:8010
+🔑 Base de datos: Cyberia
+👤 Usuario: SA
+
+⚠️ Error conectando a SQL Server: ('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]SSL Provider: [error:0A000086:SSL routines::certificate verify failed:self-signed certificate] (-1) (S127.0.0.1 - - [14/Jul/2025 14:31:43] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:43] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:31:44] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:44] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:31:45] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:45] "GET /api/ventas HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:31:53] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:53] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:31:55] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:55] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:31:56] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:56] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:31:56] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:31:56] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:21] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:21] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:21] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:22] "GET /api/ventas HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:22] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:22] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:22] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:23] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:23] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:23] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:23] "GET /ventas HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:24] "GET /api/ventas HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:24] "GET /productos HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:24] "GET /api/productos HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jul/2025 14:32:24] "GET / HTTP/1.1" 200 -
+INFO:__main__:✅ Conexión a SQL Server establecida
+127.0.0.1 - - [14/Jul/2025 14:32:24] "GET /api/analytics/dashboard-metrics HTTP/1.1" 200 -
