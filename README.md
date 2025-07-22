@@ -1,205 +1,205 @@
-# Sistema Cyberia FastAPI
+# Sistema de Reportes de Ventas - Moliendas y Alimentos
 
-## Descripción
+Sistema web para generar reportes de ventas basados en datos de Microsoft SQL Server, con funcionalidades de filtrado, visualización y exportación.
 
-Sistema de Inteligencia Empresarial moderno para Moliendas y Alimentos, desarrollado con FastAPI. Proporciona gestión completa de productos de azúcar, edulcorantes, servicios logísticos, ventas y análisis de rentabilidad.
+## Características
 
-### Características Principales
+- ✅ Dashboard con estadísticas generales
+- ✅ Reportes con filtros por fecha y productos
+- ✅ Visualización de datos con gráficos interactivos
+- ✅ Exportación a Excel
+- ✅ Interfaz responsive basada en Bootstrap
+- ✅ Conexión directa a SQL Server
+- ✅ 137 productos predefinidos para filtrado
 
-- **Dashboard Ejecutivo**: Métricas en tiempo real con formato de moneda en millones
-- **Gestión de Productos**: CRUD completo con búsqueda avanzada y sugerencias
-- **Sistema de Ventas**: Gestión de documentos de venta con detalles
-- **Precios Dinámicos**: Sistema de precios con historial y análisis de mercado
-- **Analytics Avanzados**: Comparativas mensuales, rentabilidad diaria, análisis por kg
-- **Interfaz Moderna**: UI responsiva con JavaScript vanilla y Bootstrap 5
+## Requisitos del Sistema
 
-## Tecnologías
-
-- **Backend**: FastAPI, Python 3.8+
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla), Bootstrap 5, Chart.js
-- **Base de Datos**: SQL Server con stored procedures
-- **Validación**: Pydantic schemas
-- **Templates**: Jinja2
+- Python 3.8+
+- Microsoft SQL Server con base de datos `adMOLIENDAS_Y_ALIMENTO`
+- ODBC Driver 18 for SQL Server
+- Sistema operativo: Linux (desarrollado en Arch Linux)
 
 ## Instalación
 
-### Requisitos Previos
-
-- Python 3.8 o superior
-- SQL Server con la base de datos Cyberia configurada
-- ODBC Driver para SQL Server
-
-### Pasos de Instalación
-
-1. **Clonar o descargar el proyecto**
-   ```bash
-   cd /home/ank/Documents/REporte/fastapi_cyberia
-   ```
-
-2. **Crear entorno virtual**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   # o
-   venv\Scripts\activate     # Windows
-   ```
-
-3. **Instalar dependencias**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configurar base de datos**
-   - Editar `config/database.py` con los datos de conexión
-   - Asegurar que el servidor SQL Server esté ejecutándose
-   - Verificar que las tablas y stored procedures estén creados
-
-5. **Ejecutar la aplicación**
-   ```bash
-   python main.py
-   ```
-
-   O usando uvicorn directamente:
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-   ```
-
-## Uso
-
-### Acceso a la Aplicación
-
-- **URL Principal**: http://localhost:8000
-- **Dashboard**: http://localhost:8000/dashboard
-- **Productos**: http://localhost:8000/products
-- **Ventas**: http://localhost:8000/sales
-- **Precios**: http://localhost:8000/pricing
-- **Analytics**: http://localhost:8000/analytics
-
-### API Documentation
-
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-### Endpoints Principales
-
-#### Productos
-- `GET /api/products` - Lista de productos con filtros
-- `POST /api/products` - Crear nuevo producto
-- `PUT /api/products/{id}` - Actualizar producto
-- `DELETE /api/products/{id}` - Eliminar producto (soft delete)
-- `GET /api/products/search` - Búsqueda avanzada
-- `GET /api/products/suggestions` - Sugerencias para autocompletado
-
-#### Ventas
-- `GET /api/sales/documents` - Lista de documentos de venta
-- `POST /api/sales/documents` - Crear documento de venta
-- `GET /api/sales/documents/{id}` - Obtener documento específico
-- `POST /api/sales/documents/{id}/details` - Agregar producto al documento
-
-#### Precios
-- `GET /api/pricing/current` - Precios actuales
-- `PUT /api/pricing/{product_id}` - Actualizar precio
-- `GET /api/pricing/{product_id}/history` - Historial de precios
-- `GET /api/pricing/market-analysis` - Análisis de mercado
-
-#### Analytics
-- `GET /api/analytics/dashboard-metrics` - Métricas del dashboard
-- `GET /api/analytics/monthly-comparison` - Comparativa mensual
-- `GET /api/analytics/daily-profitability` - Rentabilidad diaria
-- `GET /api/analytics/profit-per-kg` - Análisis de ganancia por kg
-
-## Estructura del Proyecto
-
-```
-fastapi_cyberia/
-├── main.py                 # Aplicación principal FastAPI
-├── requirements.txt        # Dependencias Python
-├── README.md              # Este archivo
-├── config/
-│   └── database.py        # Configuración de base de datos
-├── models/                # Servicios de negocio
-│   ├── products.py        # Servicio de productos
-│   ├── sales.py          # Servicio de ventas
-│   ├── users.py          # Servicio de usuarios
-│   ├── pricing.py        # Servicio de precios
-│   └── analytics.py      # Servicio de analytics
-├── schemas/              # Esquemas Pydantic
-│   ├── products.py       # Schemas de productos
-│   ├── sales.py         # Schemas de ventas
-│   ├── users.py         # Schemas de usuarios
-│   ├── pricing.py       # Schemas de precios
-│   └── analytics.py     # Schemas de analytics
-├── templates/           # Templates HTML
-│   ├── base.html        # Template base
-│   ├── dashboard.html   # Dashboard ejecutivo
-│   └── products.html    # Gestión de productos
-└── static/             # Archivos estáticos
-    ├── css/
-    │   └── custom.css   # Estilos personalizados
-    └── js/             # JavaScript personalizado
+### 1. Clonar o descargar el proyecto
+```bash
+cd /home/ank/Documents/FlaskReporteApp
 ```
 
-## Características Especiales
+### 2. Crear entorno virtual
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate   # Windows
+```
 
-### Dashboard Ejecutivo
-- **Formato de Moneda**: Automáticamente convierte grandes cantidades a formato de millones (ej: "2.5M", "150K")
-- **Comparativas**: Muestra cambios porcentuales vs mes anterior
-- **Ordenamiento Calendar**: Los datos mensuales se ordenan correctamente por calendario
-- **Mes Actual**: El mes de julio muestra 0 como se requirió
+### 3. Instalar dependencias
+```bash
+pip install flask pyodbc pandas openpyxl
+```
 
-### Sistema de Productos
-- **Búsqueda Inteligente**: Autocompletado con sugerencias en tiempo real
-- **Filtros Avanzados**: Por industria, categoría, rango de precios
-- **Gestión Completa**: CRUD con validación de datos
-- **Categorías Jerárquicas**: Soporte para categorías anidadas
+### 4. Configurar base de datos
+Editar `config/database.py` si es necesario:
+```python
+server = 'localhost'
+database = 'adMOLIENDAS_Y_ALIMENTO'
+username = 'SA'
+password = 'Tu_Password_Aqui'
+```
 
-### Sistema de Precios
-- **Precios Dinámicos**: Histórico completo de cambios de precios
-- **Análisis de Mercado**: Comparativas y volatilidad de precios
-- **Sugerencias**: Cálculo automático de precios basado en márgenes objetivo
-- **Actualización Masiva**: Soporte para actualización de múltiples precios
+### 5. Probar conexión
+```bash
+python test_connection.py
+```
 
-### Analytics Avanzados
-- **Métricas en Tiempo Real**: Dashboard que se actualiza automáticamente
-- **Comparativas Mensuales**: Análisis periodo a periodo
-- **Rentabilidad por kg**: Análisis específico para productos de azúcar
-- **Visualizaciones**: Gráficos interactivos con Chart.js
+### 6. Ejecutar aplicación
+```bash
+python app.py
+```
 
-## Configuración de Base de Datos
+La aplicación estará disponible en: `http://localhost:5000`
 
-La aplicación requiere que la base de datos tenga las siguientes tablas principales:
+## Uso del Sistema
 
-- `Products` - Catálogo de productos
-- `ProductCategories` - Categorías de productos
-- `ProductTypes` - Tipos de productos
-- `SugarProductAttributes` - Atributos específicos de azúcar
-- `LogisticsServiceAttributes` - Atributos de servicios logísticos
-- `DynamicPricing` - Historial de precios
-- `SalesDocuments` - Documentos de venta
-- `SalesDocumentDetails` - Detalles de ventas
-- `Users` - Usuarios/Agentes
-- `Customers` - Clientes
+### Dashboard Principal
+- Acceso desde: `http://localhost:5000/`
+- Muestra estadísticas generales de ventas
+- Gráfico de evolución de ventas (últimos 12 meses)
+- Información del sistema y productos disponibles
 
-## Health Check
+### Reportes Detallados
+- Acceso desde: `http://localhost:5000/reporte`
+- **Filtros disponibles:**
+  - Fecha de inicio y fin
+  - Selección múltiple de productos
+- **Visualización:**
+  - Gráfico de barras por periodo
+  - Tabla detallada con datos
+  - Estadísticas del periodo filtrado
+- **Exportación:**
+  - Botón "Excel" descarga archivo .xlsx
 
-La aplicación incluye un endpoint de health check:
-- `GET /health` - Verifica estado de la aplicación y conexión a base de datos
+## Estructura de Datos
 
-## Logging
+### Consulta Principal
+El sistema calcula kilogramos totales basándose en patrones en nombres de productos:
+- Productos "1 KG" → unidades × 1
+- Productos "25 KG" → unidades × 25  
+- Productos "50 KG" → unidades × 50
+- etc.
 
-La aplicación incluye logging detallado para:
-- Operaciones de base de datos
-- Errores de API
-- Eventos de startup/shutdown
+### Filtros Automáticos
+- Solo documentos tipo 3 (Remisiones) y 4 (específico)
+- Excluye productos con movimientos tipo 5 y 6
+- Solo módulo 1 del sistema
+
+## API Endpoints
+
+### GET `/api/reporte-datos`
+Obtiene datos de ventas con filtros.
+
+**Parámetros:**
+- `fecha_inicio` (opcional): formato YYYY-MM-DD
+- `fecha_fin` (opcional): formato YYYY-MM-DD  
+- `productos[]` (opcional): array de códigos de productos
+
+**Respuesta:**
+```json
+{
+  "success": true,
+  "datos": [...],
+  "estadisticas": {...},
+  "chart_data": {...}
+}
+```
+
+### GET `/api/exportar-excel`
+Descarga reporte en formato Excel con los mismos filtros.
+
+## Productos Configurados
+
+El sistema incluye 137 productos predefinidos, incluyendo:
+- MESCO25, MESCO30 (Mezclas especiales)
+- PBSMZ04-22 (Productos base maíz)  
+- PCAGF02-04 (Productos concentrado gallina)
+- PREP107-622 (Productos preparados)
+- Y muchos más...
+
+Lista completa en `config/database.py` → `PRODUCTOS_VALIDOS`
+
+## Solución de Problemas
+
+### Error de conexión a base de datos
+```bash
+# Verificar driver ODBC
+odbcinst -q -d
+
+# Probar conexión
+python test_connection.py
+```
+
+### Puerto ocupado
+```bash
+# Cambiar puerto en app.py línea final:
+app.run(host='0.0.0.0', port=5001, debug=True)
+```
+
+### Módulos no encontrados
+```bash
+# Asegurar que el entorno virtual está activo
+source venv/bin/activate
+pip list  # verificar dependencias
+```
 
 ## Desarrollo
 
-Para desarrollo local:
+### Agregar nuevos productos
+1. Editar `config/database.py`
+2. Agregar códigos a lista `PRODUCTOS_VALIDOS`
+3. Reiniciar aplicación
 
-1. Usar el flag `--reload` con uvicorn para recarga automática
-2. Los templates se recargan automáticamente
-3. Los archivos estáticos se sirven desde `/static`
+### Modificar consulta SQL
+1. Editar método `get_ventas_por_periodo()` en `app/models/reportes.py`
+2. Probar con `test_connection.py`
+
+### Personalizar interfaz
+- CSS: `app/static/css/`
+- JavaScript: Directamente en templates
+- Templates: `app/templates/`
+
+## Despliegue en Producción
+
+### Con Gunicorn
+```bash
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:8000 app:app
+```
+
+### Con Nginx (reverso proxy)
+```nginx
+server {
+    listen 80;
+    server_name tu-dominio.com;
+    
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+## Arquitectura
+
+Ver documento detallado en `ARQUITECTURA.md`
 
 ## Soporte
 
-Para soporte técnico o consultas sobre el sistema, contactar al equipo de desarrollo del proyecto Cyberia.
+Para problemas técnicos:
+1. Verificar logs en consola Flask
+2. Probar conexión con `test_connection.py`  
+3. Revisar configuración en `config/database.py`
+
+---
+
+**Desarrollado para Moliendas y Alimentos** - Sistema de Reportes de Ventas v1.0
