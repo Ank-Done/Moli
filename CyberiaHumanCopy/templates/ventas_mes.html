@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ title }}</h2>
+        <div class="export-buttons" id="exportButtons">
+            <!-- Los botones de exportación se generarán automáticamente por DataTables -->
+        </div>
+    </div>
+    
+    <div class="date-filter-container">
+        <h5><i class="fas fa-calendar-alt"></i> Filtros de Búsqueda</h5>
+        <div class="row align-items-end">
+            <div class="col-md-4">
+                <label for="dateRange" class="form-label">Rango de fechas:</label>
+                <div class="date-input-group">
+                    <input type="text" id="dateRange" class="form-control" value="2023-01-01 - 2025-12-31">
+                </div>
+                <small class="text-light">Por defecto: 2023-2025</small>
+            </div>
+            <div class="col-md-2">
+                <button type="button" id="resetDateFilter" class="btn btn-outline-light">
+                    <i class="fas fa-undo"></i> Resetear
+                </button>
+            </div>
+            <div class="col-md-4">
+                <label for="quickSearch" class="form-label">Búsqueda rápida:</label>
+                <input type="text" id="quickSearch" class="form-control" placeholder="Buscar...">
+            </div>
+            <div class="col-md-2">
+                <label for="yearQuickFilter" class="form-label">Año rápido:</label>
+                <select id="yearQuickFilter" class="form-select">
+                    <option value="">Personalizado</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2024-2025">2024-25</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="filter-bar">
+        <form method="POST" class="mb-0">
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label for="agente" class="form-label">Seleccionar Agente:</label>
+                    <select name="agente" id="agente" class="form-select">
+                        {% for agente in agentes %}
+                            <option value="{{ agente }}" 
+                                {% if agente == selected_agente %}selected{% endif %}>
+                                {{ agente }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filtrar Agente</button>
+                </div>
+                <div class="col-md-2">
+                    <label for="showRecords" class="form-label">Mostrar:</label>
+                    <select id="showRecords" class="form-select">
+                        <option value="25">25</option>
+                        <option value="50" selected>50</option>
+                        <option value="100">100</option>
+                        <option value="-1">Todos</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">Información:</label>
+                    <div class="alert alert-info mb-0" id="tableInfo">
+                        <i class="fas fa-info-circle"></i> 
+                        <span id="agentInfo">Agente: {{ selected_agente }}</span> | 
+                        <span id="recordInfo">Registros: Calculando...</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    {% if selected_agente != 'Todos' %}
+        <div class="alert alert-info">
+            <strong>Filtro activo:</strong> Mostrando datos para el agente "{{ selected_agente }}"
+        </div>
+    {% endif %}
+    
+    <div class="table-responsive">
+        {{ data|safe }}
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            // Búsqueda personalizada
+            $('#quickSearch').on('keyup', function() {
+                if (globalTable) {
+                    globalTable.search(this.value).draw();
+                }
+            });
+            
+            // Filtro rápido por año
+            $('#yearQuickFilter').on('change', function() {
+                const selectedRange = this.value;
+                if (selectedRange) {
+                    let startDate, endDate;
+                    
+                    switch(selectedRange) {
+                        case '2025':
+                            startDate = '2025-01-01';
+                            endDate = '2025-12-31';
+                            break;
+                        case '2024':
+                            startDate = '2024-01-01';
+                            endDate = '2024-12-31';
+                            break;
+                        case '2023':
+                            startDate = '2023-01-01';
+                            endDate = '2023-12-31';
+                            break;
+                        case '2024-2025':
+                            startDate = '2024-01-01';
+                            endDate = '2025-12-31';
+                            break;
+                        default:
+                            return;
+                    }
+                    
+                    // Actualizar el daterangepicker
+                    $('#dateRange').data('daterangepicker').setStartDate(moment(startDate));
+                    $('#dateRange').data('daterangepicker').setEndDate(moment(endDate));
+                    
+                    // Simular el evento apply del daterangepicker
+                    $('#dateRange').trigger('apply.daterangepicker', {
+                        startDate: moment(startDate),
+                        endDate: moment(endDate)
+                    });
+                }
+            });
+            
+            // Cambiar número de registros mostrados
+            $('#showRecords').on('change', function() {
+                if (globalTable) {
+                    globalTable.page.len(parseInt(this.value)).draw();
+                    updateTableInfo();
+                }
+            });
+            
+            // Función para actualizar información de la tabla
+            function updateTableInfo() {
+                setTimeout(function() {
+                    if (globalTable) {
+                        const info = globalTable.page.info();
+                        $('#recordInfo').text(`Registros: ${info.recordsDisplay} de ${info.recordsTotal}`);
+                    }
+                }, 100);
+            }
+            
+            // Actualizar información cuando se inicializa
+            setTimeout(function() {
+                updateTableInfo();
+                
+                // Actualizar información cuando se filtra
+                if (globalTable) {
+                    globalTable.on('draw', function() {
+                        updateTableInfo();
+                    });
+                }
+            }, 1000);
+        });
+    </script>
+{% endblock %}

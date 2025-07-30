@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ translations.ui.system_title }}</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* Light Theme Colors */
+            --primary-color: #e65100;
+            --secondary-color: #1565c0;
+            --success-color: #e65100;
+            --info-color: #1565c0;
+            --warning-color: #e65100;
+            --danger-color: #d32f2f;
+            --dark-color: #212121;
+            
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-accent: #e65100;
+            --bg-info: #1565c0;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --text-white: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Colors */
+            --primary-color: #ff9800;
+            --secondary-color: #2196f3;
+            --success-color: #ff9800;
+            --info-color: #2196f3;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --dark-color: #ffffff;
+            
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-accent: #ff9800;
+            --bg-info: #2196f3;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-white: #ffffff;
+            --border-color: #333333;
+        }
+
+        body {
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            padding: 30px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+
+        .graph-section {
+            background: linear-gradient(135deg, var(--success-color), #20c997);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(25, 135, 84, 0.3);
+        }
+
+        .controls-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .filter-section {
+            background: linear-gradient(135deg, var(--success-color), #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(25, 135, 84, 0.3);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .enhanced-table {
+            width: 100% !important;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .enhanced-table thead th {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px 8px;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .enhanced-table thead th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        .enhanced-table thead th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        .enhanced-table tbody td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #e9ecef;
+            text-align: center;
+            vertical-align: middle;
+            transition: all 0.2s ease;
+        }
+
+        .enhanced-table tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .numeric {
+            text-align: right !important;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pagination {
+            margin: 0;
+        }
+
+        .pagination .page-link {
+            border-radius: 10px;
+            margin: 0 2px;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, var(--success-color), #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(25, 135, 84, 0.3);
+        }
+
+        .stats-card h4 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stats-card p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .control-group {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(13, 110, 253, 0.3);
+        }
+
+        .form-select, .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus, .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e9ecef;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .export-buttons .btn {
+            margin: 0 5px 5px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .export-buttons .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .percentage-display {
+            background: linear-gradient(135deg, #20c997, #0dcaf0);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .percentage-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .percentage-item:last-child {
+            border-bottom: none;
+        }
+
+        .percentage-value {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .percentage-positive {
+            color: #28a745;
+        }
+
+        .percentage-negative {
+            color: #dc3545;
+        }
+
+        .percentage-neutral {
+            color: #6c757d;
+        }
+
+        .average-display {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .comparison-quote {
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #495057;
+            border-left: 4px solid #0dcaf0;
+        }
+
+        .chart-controls {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-alert {
+            background: linear-gradient(135deg, var(--warning-color), #fd7e14);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 20px;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .enhanced-table {
+                font-size: 0.875rem;
+            }
+            
+            .enhanced-table thead th,
+            .enhanced-table tbody td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-chart-line me-2"></i>{{ translations.ui.system_title }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reporte_anio">
+                            <i class="fas fa-calendar-alt me-1"></i>{{ translations.ui.year_report }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/ventas_agente_dia">
+                            <i class="fas fa-chart-bar me-1"></i>{{ translations.ui.daily_sales }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas_agente_mes">
+                            <i class="fas fa-chart-pie me-1"></i>{{ translations.ui.monthly_sales }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/objetivos_venta">
+                            <i class="fas fa-bullseye me-1"></i>{{ translations.ui.sales_objectives }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reporte_coberturas">
+                            <i class="fas fa-chart-area me-1"></i>{{ translations.ui.coverage_report }}
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-globe me-1"></i>{{ translations.ui.language }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for lang_code, lang_data in languages.items() %}
+                            <li>
+                                <a class="dropdown-item {% if current_lang == lang_code %}active{% endif %}" 
+                                   href="/set_language/{{ lang_code }}">
+                                    {{ lang_data.flag }} {{ lang_data.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary nav-link" id="themeToggle" style="border: none; background: none;">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container main-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-calendar-day me-3"></i>{{ title }}</h1>
+        </div>
+
+        <!-- Graph Section -->
+        <div class="graph-section">
+            <h5><i class="fas fa-chart-line me-2"></i>Comparación Diaria por Meses</h5>
+            
+            <div class="chart-controls">
+                <form method="GET" id="chartForm">
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold text-dark">{{ translations.ui.select_agent }}:</label>
+                            <select name="agente" class="form-select">
+                                {% for agente in agentes %}
+                                <option value="{{ agente }}" {% if agente == selected_agente %}selected{% endif %}>
+                                    {{ agente }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold text-dark">Año 1:</label>
+                            <select name="anio1" class="form-select">
+                                {% for year in years %}
+                                <option value="{{ year }}" {% if year == selected_anio1 %}selected{% endif %}>{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold text-dark">Mes 1:</label>
+                            <select name="mes1" class="form-select">
+                                {% for mes_val, mes_name in months %}
+                                <option value="{{ mes_val }}" {% if mes_val|int == selected_mes1 %}selected{% endif %}>{{ mes_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="form-label fw-bold text-dark">Día Inicio:</label>
+                            <input type="number" name="dia_inicio" class="form-control" min="1" max="31" 
+                                   value="{{ selected_dia_inicio }}">
+                        </div>
+                        <div class="col-md-1">
+                            <label class="form-label fw-bold text-dark">Día Fin:</label>
+                            <input type="number" name="dia_fin" class="form-control" min="1" max="31" 
+                                   value="{{ selected_dia_fin }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold text-dark">Año 2 (opcional):</label>
+                            <select name="anio2" class="form-select">
+                                <option value="">Sin comparar</option>
+                                {% for year in years %}
+                                <option value="{{ year }}" {% if year == selected_anio2 %}selected{% endif %}>{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold text-dark">Mes 2 (opcional):</label>
+                            <select name="mes2" class="form-select">
+                                <option value="">Sin comparar</option>
+                                {% for mes_val, mes_name in months %}
+                                <option value="{{ mes_val }}" {% if mes_val|int == selected_mes2 %}selected{% endif %}>{{ mes_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-light fw-bold w-100" style="margin-top: 32px;">
+                                <i class="fas fa-chart-line me-1"></i>Actualizar Vista
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-light fw-bold w-100" id="clearFilters" style="margin-top: 32px;">
+                                <i class="fas fa-times me-1"></i>Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {% if graph_data %}
+            <div class="chart-container" style="position: relative;">
+                <div class="average-display" id="averageDisplay" style="display: none;">
+                    <div style="font-size: 0.9em;">Promedio:</div>
+                    <div id="averageValue" style="font-size: 1.2em;">--</div>
+                </div>
+                <canvas id="comparisonChart" width="400" height="200"></canvas>
+                
+                <div class="comparison-quote">
+                    <strong>Nota:</strong> El primer período seleccionado es el período base de comparación, y el segundo período es el período de comparación para calcular los porcentajes de incremento o decremento.
+                </div>
+                
+                <div class="percentage-display" id="percentageDisplay" style="display: none;">
+                    <h6><i class="fas fa-percentage me-2"></i>Porcentajes de Variación Diaria (Período 2 vs Período 1)</h6>
+                    <div id="percentageList"></div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Active Filter Alert -->
+        {% set month_names = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] %}
+        {% if selected_agente != 'Todos' or selected_anio2 %}
+        <div class="alert filter-alert">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Filtros activos:</strong>
+            {% if selected_agente != 'Todos' %}
+                Agente: "{{ selected_agente }}"
+            {% endif %}
+            {% if selected_anio2 %}
+                - Comparando: {{ month_names[selected_mes1] }} {{ selected_anio1 }} vs {{ month_names[selected_mes2] }} {{ selected_anio2 }} (días {{ selected_dia_inicio }}-{{ selected_dia_fin }})
+            {% else %}
+                - Período: {{ month_names[selected_mes1] }} {{ selected_anio1 }} (días {{ selected_dia_inicio }}-{{ selected_dia_fin }})
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <div class="control-group">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-list me-1"></i>{{ translations.ui.records_per_page }}
+                        </label>
+                        <select class="form-select" id="perPageSelect">
+                            <option value="25" {% if pagination.per_page == 25 %}selected{% endif %}>25</option>
+                            <option value="50" {% if pagination.per_page == 50 %}selected{% endif %}>50</option>
+                            <option value="100" {% if pagination.per_page == 100 %}selected{% endif %}>100</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="control-group">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-search me-1"></i>{{ translations.ui.quick_search }}
+                        </label>
+                        <input type="text" class="form-control" id="quickSearch" placeholder="{{ translations.ui.search_table }}">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100" id="refreshBtn">
+                        <i class="fas fa-sync-alt me-1"></i>{{ translations.ui.refresh }}
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <h4>{{ pagination.total }}</h4>
+                        <p>{{ translations.ui.total_records }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="export-buttons mb-3">
+            <button class="btn btn-success btn-sm" id="exportExcel">
+                <i class="fas fa-file-excel me-1"></i>{{ translations.ui.export_excel }}
+            </button>
+            <button class="btn btn-danger btn-sm" id="exportPDF">
+                <i class="fas fa-file-pdf me-1"></i>{{ translations.ui.export_pdf }}
+            </button>
+            <button class="btn btn-secondary btn-sm" id="printTable">
+                <i class="fas fa-print me-1"></i>{{ translations.ui.print }}
+            </button>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table enhanced-table" id="dataTable">
+                    <thead>
+                        <tr>
+                            {% for column in columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr>
+                            {% for column in columns %}
+                            <td class="{% if 'kilos' in column.lower() or 'toneladas' in column.lower() or 'unidades' in column.lower() %}numeric{% endif %}">
+                                {% if row[column] is number %}
+                                    {{ "{:,.2f}".format(row[column]) }}
+                                {% else %}
+                                    {{ row[column] or '' }}
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <div class="stats-card" style="background: linear-gradient(135deg, var(--info-color), var(--primary-color));">
+                <h4>{{ pagination.page }}</h4>
+                <p>{{ translations.ui.page_of }} {{ pagination.pages }} {{ translations.ui.pages }}</p>
+            </div>
+
+            <nav aria-label="Navegación de páginas">
+                <ul class="pagination">
+                    {% if pagination.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&per_page={{ pagination.per_page }}">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ pagination.page - 1 }}&per_page={{ pagination.per_page }}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in range([1, pagination.page - 2]|max, [pagination.pages + 1, pagination.page + 3]|min) %}
+                    <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+                        <a class="page-link" href="?page={{ page_num }}&per_page={{ pagination.per_page }}">{{ page_num }}</a>
+                    </li>
+                    {% endfor %}
+
+                    {% if pagination.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ pagination.page + 1 }}&per_page={{ pagination.per_page }}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ pagination.pages }}&per_page={{ pagination.per_page }}">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <div class="stats-card" style="background: linear-gradient(135deg, var(--warning-color), #fd7e14);">
+                <h4>{{ pagination.per_page }}</h4>
+                <p>{{ translations.ui.per_page }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Show loading overlay
+            function showLoading() {
+                $('#loadingOverlay').fadeIn(300);
+            }
+
+            // Hide loading overlay
+            function hideLoading() {
+                $('#loadingOverlay').fadeOut(300);
+            }
+
+            // Initialize DataTable
+            const table = $('#dataTable').DataTable({
+                responsive: true,
+                pageLength: {{ pagination.per_page }},
+                lengthChange: false,
+                searching: true,
+                ordering: true,
+                info: false,
+                paging: false, // Server-side pagination
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                },
+                columnDefs: [
+                    {
+                        targets: 'numeric',
+                        className: 'numeric'
+                    }
+                ],
+                dom: 'rt',
+                deferRender: true,
+                scrollCollapse: true
+            });
+
+            // Quick search functionality
+            $('#quickSearch').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            // Per page change
+            $('#perPageSelect').on('change', function() {
+                const newPerPage = $(this).val();
+                showLoading();
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('page', '1');
+                urlParams.set('per_page', newPerPage);
+                window.location.href = `${window.location.pathname}?${urlParams}`;
+            });
+
+            // Refresh button
+            $('#refreshBtn').on('click', function() {
+                showLoading();
+                window.location.reload();
+            });
+
+            // Clear filters button
+            $('#clearFilters').on('click', function() {
+                window.location.href = '/ventas_agente_dia';
+            });
+
+            // Export functionality
+            $('#exportExcel').on('click', function() {
+                showLoading();
+                const agente = '{{ selected_agente }}';
+                const fecha = '{{ selected_fecha or "" }}';
+                const anio1 = '{{ selected_anio1 or "" }}';
+                const mes1 = '{{ selected_mes1 or "" }}';
+                const dia_inicio = '{{ selected_dia_inicio or "" }}';
+                const dia_fin = '{{ selected_dia_fin or "" }}';
+                const anio2 = '{{ selected_anio2 or "" }}';
+                const mes2 = '{{ selected_mes2 or "" }}';
+                
+                const url = `/export_ventas_dia_excel?agente=${encodeURIComponent(agente)}&fecha=${fecha}&anio1=${anio1}&mes1=${mes1}&dia_inicio=${dia_inicio}&dia_fin=${dia_fin}&anio2=${anio2}&mes2=${mes2}`;
+                
+                // Create temporary link to trigger download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = '';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(() => {
+                    hideLoading();
+                }, 1000);
+            });
+
+            $('#exportPDF').on('click', function() {
+                showLoading();
+                const agente = '{{ selected_agente }}';
+                const fecha = '{{ selected_fecha or "" }}';
+                const anio1 = '{{ selected_anio1 or "" }}';
+                const mes1 = '{{ selected_mes1 or "" }}';
+                const dia_inicio = '{{ selected_dia_inicio or "" }}';
+                const dia_fin = '{{ selected_dia_fin or "" }}';
+                const anio2 = '{{ selected_anio2 or "" }}';
+                const mes2 = '{{ selected_mes2 or "" }}';
+                
+                const url = `/export_ventas_dia_html?agente=${encodeURIComponent(agente)}&fecha=${fecha}&anio1=${anio1}&mes1=${mes1}&dia_inicio=${dia_inicio}&dia_fin=${dia_fin}&anio2=${anio2}&mes2=${mes2}`;
+                
+                // Create temporary link to trigger download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = '';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(() => {
+                    hideLoading();
+                }, 1000);
+            });
+
+            $('#printTable').on('click', function() {
+                window.print();
+            });
+
+            // Initialize chart if data exists
+            {% if graph_data %}
+            const chartData = {{ graph_data | tojson }};
+            initializeChart(chartData);
+            {% endif %}
+
+            function initializeChart(data) {
+                // Process data for Chart.js
+                const groupedData = {};
+                
+                data.forEach(item => {
+                    const key = `${item.Anio}-${item.Mes}`;
+                    if (!groupedData[key]) {
+                        groupedData[key] = {};
+                    }
+                    groupedData[key][item.Dia] = item.ToneladasTotales;
+                });
+
+                // Create datasets for each month
+                const datasets = [];
+                const colors = ['#0d6efd', '#dc3545', '#198754', '#ffc107'];
+                let colorIndex = 0;
+                const periods = Object.keys(groupedData).sort();
+
+                Object.keys(groupedData).forEach(monthKey => {
+                    const [year, month] = monthKey.split('-');
+                    const monthData = [];
+                    const monthNames = ['', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                    
+                    for (let day = {{ selected_dia_inicio }}; day <= {{ selected_dia_fin }}; day++) {
+                        monthData.push(groupedData[monthKey][day] || 0);
+                    }
+
+                    datasets.push({
+                        label: `${monthNames[parseInt(month)]} ${year}`,
+                        data: monthData,
+                        borderColor: colors[colorIndex % colors.length],
+                        backgroundColor: colors[colorIndex % colors.length] + '20',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4
+                    });
+                    colorIndex++;
+                });
+
+                // Create labels for days
+                const labels = [];
+                for (let day = {{ selected_dia_inicio }}; day <= {{ selected_dia_fin }}; day++) {
+                    labels.push(`Día ${day}`);
+                }
+
+                // Calculate percentages if we have exactly 2 periods
+                if (periods.length === 2) {
+                    const period1 = periods[0];  // Base period (first period)
+                    const period2 = periods[1];  // Comparison period (second period)
+                    
+                    const percentages = [];
+                    const dailyPercentages = [];
+                    
+                    for (let day = {{ selected_dia_inicio }}; day <= {{ selected_dia_fin }}; day++) {
+                        const value1 = groupedData[period1][day] || 0;
+                        const value2 = groupedData[period2][day] || 0;
+                        
+                        let percentage = 0;
+                        if (value1 > 0) {
+                            percentage = ((value2 - value1) / value1) * 100;
+                        } else if (value2 > 0) {
+                            percentage = 100; // 100% increase from 0
+                        }
+                        
+                        percentages.push(percentage);
+                        dailyPercentages.push({
+                            day: day,
+                            percentage: percentage,
+                            value1: value1,
+                            value2: value2
+                        });
+                    }
+                    
+                    // Calculate average percentage
+                    const validPercentages = percentages.filter(p => !isNaN(p) && isFinite(p));
+                    const averagePercentage = validPercentages.length > 0 ? 
+                        validPercentages.reduce((sum, p) => sum + p, 0) / validPercentages.length : 0;
+                    
+                    // Display percentages
+                    displayPercentages(dailyPercentages, averagePercentage, period1, period2);
+                }
+
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Comparación de Ventas Diarias por Mes',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Toneladas'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Días'
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        }
+                    }
+                });
+            }
+
+            function displayPercentages(dailyPercentages, averagePercentage, period1, period2) {
+                // Display average percentage in upper right corner
+                const averageDisplay = document.getElementById('averageDisplay');
+                const averageValue = document.getElementById('averageValue');
+                
+                const avgFormatted = averagePercentage.toFixed(1);
+                const avgClass = averagePercentage >= 0 ? 'percentage-positive' : 'percentage-negative';
+                const avgIcon = averagePercentage >= 0 ? '↗' : '↘';
+                
+                averageValue.innerHTML = `${avgIcon} ${avgFormatted}%`;
+                averageValue.className = avgClass;
+                averageDisplay.style.display = 'block';
+                
+                // Display daily percentages
+                const percentageDisplay = document.getElementById('percentageDisplay');
+                const percentageList = document.getElementById('percentageList');
+                
+                let html = '';
+                dailyPercentages.forEach(item => {
+                    const percentage = item.percentage.toFixed(1);
+                    const percentageClass = item.percentage > 0 ? 'percentage-positive' : 
+                                          item.percentage < 0 ? 'percentage-negative' : 'percentage-neutral';
+                    const icon = item.percentage > 0 ? '↗' : item.percentage < 0 ? '↘' : '→';
+                    
+                    html += `
+                        <div class="percentage-item">
+                            <div>
+                                <strong>Día ${item.day}</strong>
+                                <small class="d-block text-muted">
+                                    ${item.value1.toFixed(1)} → ${item.value2.toFixed(1)} ton
+                                </small>
+                            </div>
+                            <div class="percentage-value ${percentageClass}">
+                                ${icon} ${percentage}%
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                percentageList.innerHTML = html;
+                percentageDisplay.style.display = 'block';
+            }
+
+            // Add loading state to pagination links
+            $('.page-link').on('click', function() {
+                showLoading();
+            });
+
+            // Hide loading on page load
+            hideLoading();
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            body.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+            }
+
+            // Add loading animation for navigation links
+            $('.navbar-nav .nav-link').on('click', function(e) {
+                const href = $(this).attr('href');
+                // Only show loading for actual navigation (not current page or # links)
+                if (href && href !== '#' && !$(this).hasClass('active') && !$(this).hasClass('dropdown-toggle')) {
+                    showLoading();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+=========================================
+COMANDO COPY-PASTE PARA TERMINAL
+=========================================
+
+Para ejecutar la restauración de datos, copia y pega estos comandos en tu terminal:
+
+# 1. Ir a la carpeta del proyecto
+cd /home/ank/Documents/CyberiaHumanCopy
+
+# 2. Ejecutar el script de restauración
+./restore_data.sh
+
+=========================================
+ALTERNATIVA: EJECUTAR SQL DIRECTO
+=========================================
+
+Si prefieres ejecutar el SQL directamente:
+
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Mar120305!' -C -i restore_data_only.sql
+
+=========================================
+VERIFICACIÓN RÁPIDA DESPUÉS
+=========================================
+
+# Verificar que la aplicación funcione
+python app.py
+
+# En otra terminal, probar la conexión
+curl http://localhost:5000
+
+=========================================
